@@ -280,9 +280,10 @@ call bor_usuario_Admin('13456');
 
 /*Procedures Administrador(Animal)*/
 /*Insertar Animal*/
-create procedure inser_animal_Admin(codigo int(30),nombre varchar(50),tipo varchar(50),edad varchar(5),raza varchar(30))
-insert into animal values(codigo,nombre,tipo,edad,raza);
-call inser_animal_Admin(11,'Prueba','Grande','7','Doberman');
+create procedure inser_animal_Admin(nombre varchar(50),tipo varchar(50),edad varchar(5),raza varchar(30))
+insert into animal(nombre_animal,tipo_animal,edad_animal,raza_animal) values(nombre,tipo,edad,raza);
+call inser_animal_Admin('Prueba','Grande','7','Doberman');
+-- drop procedure inser_animal_Admin;
 
 /*Modificar Animal*/
 create procedure act_animal_Admin(codigo int(30),nombre varchar(50), tipo varchar(50),edad varchar(5),raza varchar(30))
