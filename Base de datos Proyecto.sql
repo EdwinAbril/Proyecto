@@ -319,8 +319,8 @@ call inser_admin_Admin('Kno','123');
 
 /*Modificar Administrador*/
 create procedure act_admin_Admin(us varchar(50),cla varchar(50))
-update admin set clave=cla where usuario=us;
-call act_admin_Admin('Kno','1234');
+update usuarios set clave=cla where usuario=us;
+call act_admin_Admin('Alf','1234');
 
 /*Eliminar Administrador*/
 create procedure bor_admin_Admin(us varchar(50))
