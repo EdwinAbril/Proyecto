@@ -324,7 +324,7 @@ call act_admin_Admin('Alf','1234');
 
 /*Eliminar Administrador*/
 create procedure bor_admin_Admin(us varchar(50))
-delete from admin where usuario=us;
+delete from usuarios where usuario=us;
 call bor_admin_Admin('Kno');
 
 /*Procedures Administrador(Veterinaria)*/
