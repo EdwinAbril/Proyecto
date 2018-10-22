@@ -232,32 +232,13 @@ values
 ('2018/03/12','proceso exitoso',1),
 ('2018/02/28','proceso regular',2);
 
-
-CREATE TABLE admin(
-    usuario VARCHAR(50) primary key,
+CREATE TABLE usuarios(
+   usuario VARCHAR(50) primary key,
     clave VARCHAR(50) ,
     rol4 int(30),
     constraint ro4 foreign key (rol4) references roles(rol) on delete cascade on update cascade
 );
-
-insert into admin(usuario,clave,rol4) values
-('Alf','4321',1);
-
-CREATE TABLE usuarios(
-    nom_usuario VARCHAR(50) primary key,
-    clave VARCHAR(50),
-    rol5 int(30),
-    constraint ro5 foreign key (rol5) references roles(rol) on delete cascade on update cascade,
-    constraint us1 foreign key (nom_usuario) references registro_usuario(nombre_usuario) on delete cascade on update cascade,
-    constraint us2 foreign key (nom_usuario) references funcionario(cedula_funcionario) on delete cascade on update cascade,
-    constraint us3 foreign key (nom_usuario) references veterinaria(nit_veterinaria) on delete cascade on update cascade,
-    constraint us4 foreign key (nom_usuario) references admin(usuario) on delete cascade on update cascade
-);
-
-insert into usuarios(nom_usuario,clave,rol5) values
-('AlexElCapo','1111',4),
-('72471422','0000',2),
-('811192822-A','veterinaria',3),
+insert into usuarios(usuario,clave,rol4) values
 ('Alf','4321',1);
 
 create table usuario_funcionario
@@ -319,6 +300,10 @@ create procedure bor_usuario_Admin(cedu varchar(50))
 delete from ciudadano where cedula=cedu;
 call bor_usuario_Admin('13456');
 
+-- Insertar jornada
+create procedure inser_evento_Admin(fec date,lug varchar(45),dur time, des varchar(255))
+insert into jornada (fecha,lugar,duracion,descripcion) values (fec,lug,dur,des);
+call inser_evento_Admin('2018/10/22','aqui','3:00:00','hola');
 
 /*Procedures Administrador(Animal)*/
 /*Insertar Animal*/
@@ -717,6 +702,12 @@ Create procedure FunEliminar_Comentarios( cod int(30))
 Delete from Comentarios where codigo_comentario=cod;
 
 call FunEliminar_Comentarios();
+-- Insertar eventos
+Create procedure Insertar_Eventos(fec date, lug varchar(45), dur time, des varchar(255))
+insert into jornada
+values(fecha, lugar, duracion,descripcion);
+call Insertar_Eventos('2018-10-22','Mosquera','','Jornada de vacunacion');
+
 
 /* FUNCIONARIO-EVENTOS(Jornada) */
 
