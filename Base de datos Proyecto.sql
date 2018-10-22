@@ -12,16 +12,15 @@ values(1,'Administrador'),(2,'Funcionario'),(3,'Veterinaria'),(4,'Ciudadano');
 
 
 create table registro_usuario
-(cedula_ciu varchar (50) primary key,
-nombre_usuario varchar(50),
+(nombre_usuario varchar(50) primary key,
 clave varchar(50),
 rol1 int(30),
 constraint ro foreign key (rol1) references roles(rol) on delete cascade on update cascade
 );
 
-insert into registro_usuario(cedula_ciu,nombre_usuario,clave,rol1)
-values('9907162019','AlexElCapo','1111',4),
-('1001263254','JuanMakia','0000',4);
+insert into registro_usuario(nombre_usuario,clave,rol1)
+values('AlexElCapo','1111',4),
+('JuanMakia','0000',4);
 
 create table ciudadano
 (cedula varchar (50) primary key , 
@@ -29,13 +28,14 @@ nombre varchar (45),
 telefono varchar (20),
 direccion varchar(45),
 correo varchar (45),
-constraint ced foreign key (cedula) references registro_usuario(cedula_ciu) on delete cascade on update cascade
+usuario_ciu varchar(50),
+constraint usu foreign key (usuario_ciu) references registro_usuario(nombre_usuario) on delete cascade on update cascade
 );
 
-insert into ciudadano(cedula,nombre,telefono,direccion,correo)
+insert into ciudadano(cedula,nombre,telefono,direccion,correo,usuario_ciu)
 values 
-('9907162019','Alex','3132784923','cll 3 # 3-25','Alex.99@hotmail.com'),
-('1001263254','Juan','3101827462','cra 2 # 2-30','Juan.r4r3@hotmail.com');
+('9907162019','Alex','3132784923','cll 3 # 3-25','Alex.99@hotmail.com','AlexElCapo'),
+('1001263254','Juan','3101827462','cra 2 # 2-30','Juan.r4r3@hotmail.com','JuanMakia');
 
 create table animal (
 codigo_animal int(30) auto_increment primary key,
@@ -110,7 +110,7 @@ values
 
 
 create table veterinaria (
-nit_veterinaria varchar(30) primary key,
+nit_veterinaria varchar(50) primary key,
 telefono_veterinaria varchar(30) not null,
 nombre_veterinaria varchar(50) not null,
 direccion_veterinaria varchar(50) not null,
@@ -129,7 +129,7 @@ values
 ('811192822-D','3113216547','Guau y miau','Calle 11#13-22','veterinaria',3);
 
 create table funcionario (
-cedula_funcionario varchar(30) primary key,
+cedula_funcionario varchar(50) primary key,
 telefono_funcionario varchar(30) not null,
 nombre_funcionario varchar (50) not null,
 correo_funcionario varchar (100) not null,
@@ -233,15 +233,37 @@ values
 ('2018/02/28','proceso regular',2);
 
 
-CREATE TABLE usuarios(
+CREATE TABLE admin(
     usuario VARCHAR(50) primary key,
     clave VARCHAR(50) ,
     rol4 int(30),
     constraint ro4 foreign key (rol4) references roles(rol) on delete cascade on update cascade
 );
--- drop table usuarios;
-insert into usuarios(usuario,clave,rol4) values
+
+insert into admin(usuario,clave,rol4) values
 ('Alf','4321',1);
+
+CREATE TABLE usuarios(
+    nom_usuario VARCHAR(50) primary key,
+    clave VARCHAR(50),
+    rol5 int(30),
+    constraint ro5 foreign key (rol5) references roles(rol) on delete cascade on update cascade,
+    constraint us1 foreign key (nom_usuario) references registro_usuario(nombre_usuario) on delete cascade on update cascade,
+    constraint us2 foreign key (nom_usuario) references funcionario(cedula_funcionario) on delete cascade on update cascade,
+    constraint us3 foreign key (nom_usuario) references veterinaria(nit_veterinaria) on delete cascade on update cascade,
+    constraint us4 foreign key (nom_usuario) references admin(usuario) on delete cascade on update cascade
+);
+
+insert into usuarios(nom_usuario,clave,rol5) values
+('AlexElCapo','1111',4),
+('72471422','0000',2),
+('811192822-A','veterinaria',3),
+('Alf','4321',1);
+
+
+
+-- drop table usuarios;
+
 
 
 
@@ -319,7 +341,7 @@ call inser_admin_Admin('Kno','123');
 
 /*Modificar Administrador*/
 create procedure act_admin_Admin(us varchar(50),cla varchar(50))
-update usuarios set clave=cla where usuario=us;
+update admin set clave=cla where usuario=us;
 call act_admin_Admin('Alf','1234');
 
 /*Eliminar Administrador*/
@@ -771,3 +793,4 @@ where month(fecha_respuesta)='06';
 select nombre,telefono,nombre_mascota,raza_mascota from ciudadano
 inner join mascota on ciudadano.cedula=mascota.ced
 where estado_mascota='operado';
+insert into usuarios(nom_usuario,clave,rol5) values ('AlexElCapo','1111',4), ('JuanMakia','0000',4), ('72471422','0000',2), ('52849421','0000',2), ('68470826','0000',2), ('98374971','0000',2), ('41683731','0000',2), ('811192822-A','veterinaria',3), ('811192822-B','veterinaria',3), ('811192822-C','veterinaria',3), ('811192822-D','veterinaria',3), ('Alf','4321',1)
