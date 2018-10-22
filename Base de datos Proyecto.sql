@@ -96,7 +96,7 @@ values
 ('3137506273','Calle 100#52-32','8236611','','9907162019',1),
 ('3146748971','Calle 4#98-26','82314887','','9907162019',3);
 
-drop table postulacion;
+-- drop table postulacion;
 create table seguimiento
 (codigo_seguimiento int(30) auto_increment primary key,
 cod_postula int(30),
@@ -232,35 +232,37 @@ values
 ('2018/03/12','proceso exitoso',1),
 ('2018/02/28','proceso regular',2);
 
+
 CREATE TABLE usuarios(
-   usuario VARCHAR(50) primary key,
-    clave VARCHAR(50) ,
+    nom_usuario VARCHAR(50) primary key,
+    clave VARCHAR(50),
     rol4 int(30),
     constraint ro4 foreign key (rol4) references roles(rol) on delete cascade on update cascade
 );
-insert into usuarios(usuario,clave,rol4) values
+
+insert into usuarios(nom_usuario,clave,rol5) values
 ('Alf','4321',1);
 
 create table usuario_funcionario
 (cedula_fun varchar (50) primary key,
-nombre_usuario varchar(50),
 clave varchar(50),
 rol2 int(30),
 constraint rof foreign key (rol2) references roles(rol) on delete cascade on update cascade
 );
-insert into usuario_funcionario(cedula_fun,nombre_usuario,clave,rol2)
-values('9907162019','AlexElCapo','1111',2),
-('1001263254','JuanMakia','0000',2);
+insert into usuario_funcionario(cedula_fun,clave,rol2)
+values('9907162019','1111',2),
+('1001263254','0000',2);
+
 create table usuario_veterinaria
 (
-nombre_usuario varchar(50) primary key,
+nit_veterinaria varchar(50) primary key,
 clave varchar(50),
 rol3 int(30),
 constraint rov foreign key (rol3) references roles(rol) on delete cascade on update cascade
 );
 insert into usuario_veterinaria(nombre_usuario,clave,rol3)
-values('AlexElCapo','1111',3),
-('JuanMakia','0000',3);
+values('811192822-A','1111',3),
+('811192822-B','0000',3);
 
 
 -- drop table usuarios;
@@ -272,206 +274,123 @@ values('AlexElCapo','1111',3),
 /*Insertar Ciudadano*/
 create procedure insertar_usuario_Admin(cedula varchar(50), nombre varchar(50),pass varchar(50),rol int(30))
 insert into registro_usuario values(cedula,nombre,pass,rol);
-call insertar_usuario_Admin('13456','Prueba','123',4);
 
 /*Actualizar Clave Ciudadano*/
 create procedure actualizar_usuario_Admin(cedula varchar(50),pass varchar(50))
 update registro_usuario set clave=pass where cedula_ciu=cedula;
-call actualizar_usuario_Admin('13456','1234');
 
 /*Borrar Ciudadano*/
 create procedure borrar_usuario_Admin(cedula varchar(50))
 delete from registro_usuario where cedula_ciu=cedula;
-call borrar_usuario_Admin('13456');
 
 /*Procedures Administrador (Usuarios)*/
 /*Insertar Usuario*/
 create procedure inser_usuario_Admin(cedu varchar(50), nom varchar(45),tel varchar(20), dir varchar(45), cor varchar(50),us varchar(50))
 insert into ciudadano values(cedu,nom,tel,dir,cor,us);
-call inser_usuario_Admin('13456','Sujeto','31371','Prados','s@gmail.com','JuanMakia');
-
 /*Actualizar Usuario*/
 create procedure act_usuario_Admin(cedu varchar(50),nom varchar(45),tel varchar(20), dir varchar(45),cor varchar(50))
 update ciudadano set nombre=nom,telefono=tel,direccion=dir,correo=cor where cedula=cedu;
-call act_usuario_Admin('13456','Sujeto de prueba','313712','Prados1','s1@gmail.com');
-
 /*Borrar Usuario*/
 create procedure bor_usuario_Admin(cedu varchar(50))
 delete from ciudadano where cedula=cedu;
-call bor_usuario_Admin('13456');
 
--- Insertar jornada
 create procedure inser_evento_Admin(fec date,lug varchar(45),dur time, des varchar(255))
-insert into jornada (fecha,lugar,duracion,descripcion) values (fec,lug,dur,des);
-call inser_evento_Admin('2018/10/22','aqui','3:00:00','hola');
-
+insert into jornada(fecha,lugar,duracion,descripcion) values(fec,lug,dur,des);
 /*Procedures Administrador(Animal)*/
 /*Insertar Animal*/
 create procedure inser_animal_Admin(nombre varchar(50),tipo varchar(50),edad varchar(5),raza varchar(30),imagen varchar(255))
 insert into animal (nombre_animal,tipo_animal,edad_animal,raza_animal,foto) values (nombre,tipo,edad,raza,imagen);
-call inser_animal_Admin('Prueba','Gato','5','Persa','');
 -- drop procedure inser_animal_Admin;
 
 /*Modificar Animal*/
 create procedure act_animal_Admin(codigo int(30),nombre varchar(50), tipo varchar(50),edad varchar(5),raza varchar(30))
 update animal set codigo_animal=codigo,nombre_animal=nombre,tipo_animal=tipo,edad_animal=edad,raza_animal=raza where codigo_animal=codigo;
-call act_animal_Admin(11,'Doroty','Hembra','5','Doberman');
 
 /*Borrar Animal*/
 create procedure bor_animal_Admin(codigo int(30))
 delete from animal where codigo_animal=codigo;
-call bor_animal_Admin(11);
-
 /*Procedures Administrador(Mascota)*/
 /*Insertar Mascota*/
 create procedure inser_mascota_Admin(codigo int(30),nombre varchar(30),des varchar(30),estado varchar(45),tipo varchar(20),edad varchar(20),raza varchar(20),ce varchar(20))
 insert into mascota values(codigo,nombre,des,estado,tipo,edad,raza,ce);
-call inser_mascota_Admin(3,'Mateo','Puro','Sano','Macho','3','Pitbull','13456'); 
 
 /**Modificar Mascota*/
 create procedure act_mascota_Admin(codigo int(30),nombre varchar(30),des varchar(30),estado varchar(45),tipo varchar(20),edad varchar(20),raza varchar(20),ce varchar(20))
-update mascota set codigo_mascota=codigo,nombre_mascota=nombre,descendencia=des,estado_mascota=estado,tipo_mascota=tipo,edad_mascota=edad,raza_mascota=raza,ced=ce where codigo_mascota=codigo; 
-call act_mascota_Admin(3,'Mateus','Puro','Enfermo','Macho','4','Pitbull','13456');
+update mascota set nombre_mascota=nombre,descendencia=des,estado_mascota=estado,tipo_mascota=tipo,edad_mascota=edad,raza_mascota=raza,ced=ce where codigo_mascota=codigo; 
 
 /*Borrar Mascota*/
 create procedure bor_mascota_Admin(codigo int(30))
 delete from mascota where codigo_mascota=codigo;
-call bor_mascota_Admin(3);
 
 /*Procedures Administrador(Admin)*/
 /*Insertar Administrador*/
 create procedure inser_admin_Admin(us varchar(50),cla varchar(50))
-insert into admin values(us,cla);
-call inser_admin_Admin('Kno','123');
+insert into usuarios values(us,cla);
 
 /*Modificar Administrador*/
 create procedure act_admin_Admin(us varchar(50),cla varchar(50))
-update admin set clave=cla where usuario=us;
-call act_admin_Admin('Alf','1234');
+update usuarios set clave=cla where usuario=us;
 
 /*Eliminar Administrador*/
 create procedure bor_admin_Admin(us varchar(50))
 delete from usuarios where usuario=us;
-call bor_admin_Admin('Kno');
 
 /*Procedures Administrador(Veterinaria)*/
 /*Insertar Veterinaria*/
 create procedure inser_veter_Admin(nit varchar(30),tel varchar(30),nombre varchar(50),dir varchar(50),clave varchar(50))
 insert into veterinaria values(nit,tel,nombre,dir,clave);
-call inser_veter_Admin('A341','313341','Pies Descalzos','Prados','123');
 
 /*Modificar Veterinaria*/
 create procedure act_veter_Admin(nit varchar(30),tel varchar(30),nombre varchar(50),dir varchar(50),cla varchar(50))
 update veterinaria set telefono_veterinaria=tel,nombre_veterinaria=nombre,direccion_veterinaria=dir,clave=cla where nit_veterinaria=nit;
-call act_veter_Admin('A341','3133412','Pies','Prados1','1234');
 
 /*Eliminar Veterinaria*/
 create procedure bor_veter_Admin(nit varchar(30))
 delete from veterinaria where nit_veterinaria=nit;
-call bor_veter_Admin('A341');
 
 
 /*Procedures Administrador (Funcionario)*/
 /*Insertar Funcionario*/
 create procedure inser_fun_Admin(cedula varchar(30),telefono varchar(30),nombre varchar(50),correo varchar(100),clave varchar(100))
 insert into funcionario  values(cedula,telefono,nombre,correo,clave);
-call inser_fun_Admin('101012','3130987','Antonio','Antonio@gmail.com','1313');
 
 /*Modificar Funcionario*/
 Create procedure Modificar_Funcionario( ced varchar(30), tel varchar(30), nom varchar(50), cor varchar(100), cla varchar(100))
 Update Funcionario set telefono_funcionario=tel, nombre_funcionario=nom, correo_funcionario=cor, clave=cla where cedula_funcionario=ced; 
-
-call Modificar_Funcionario('72471422','3216440371','Manuel','manuelito@gmail.com','0000');
 
 
 /*Eliminar Funcionario*/
 Create procedure Eliminar_Funcionario( ced varchar(30))
 Delete from Funcionario where cedula_funcionario=ced;
 
-call Eliminar_Funcionario();
-
-
-
 -- USUARIO
-
--- Veterinaria
-
-create procedure usuario_veter()
-select * from veterinaria; 
-
-call usuario_veter;
-
--- Animal
-
-create procedure usuario_animal()
-select * from animal; 
-
-call usuario_animal;
 
 -- Mascota
 
 create procedure usuario_mascota_inser(cod_mas int(30), nom_mas varchar(30), descen varchar(30), esta_mas varchar(45), tip_mas varchar(20), edad_mas varchar(20), raza_mas varchar(20), cedu varchar(20))
 insert into mascota values (cod_mas, nom_mas, descen, esta_mas, tip_mas, edad_mas, raza_mas, cedu);
 
-call usuario_mascota_inser(3,'Puto','Puro','Bien','Perro','15 meses','Pitbull',1);
-
-create procedure usuario_mascota_consul(cedu varchar(20))
-select * from mascota where ced=cedu;
-
-call usuario_mascota_consul(1);
-
 create procedure usuario_mascota_actu(cod_mas int(30), nom_mas varchar(30), descen varchar(30), esta_mas varchar(45), tip_mas varchar(20), edad_mas varchar(20), raza_mas varchar(20), cedu varchar(20))
-update mascota set codigo_mascota=cod_mas, nombre_mascota=nom_mas, descendencia=descen, estado_mascota=esta_mas, tipo_mascota=tip_mas, edad_mascota=edad_mas, raza_mascota=raza_mas where ced=cedu;
-
-call usuario_mascota_actu(3,'Kayn','Puro','Bien','Perro','15 meses','Pitbull',1);
+update mascota set nombre_mascota=nom_mas, descendencia=descen, estado_mascota=esta_mas, tipo_mascota=tip_mas, edad_mascota=edad_mas, raza_mascota=raza_mas where ced=cedu and codigo_mascota=cod_mas;
 
 create procedure usuario_mascota_elim(cedu varchar(20))
 delete from mascota where ced=cedu;
-
-call usuario_mascota_elim(1);
 
 -- Denuncia
 
 create procedure usuario_denuncia_inser(fec_den date, descrip varchar(150), cedul varchar(20))
 insert into denuncia (fecha_denuncia,descripcion_denuncia,cedul_ciudadano) values (fec_den, descrip, cedul);
 
-call usuario_denuncia_inser('2018/09/17','Puto',1);
-
 -- Comentarios
 
 create procedure usuario_comentarios_inser(fec date, cuerpo varchar(255), adop int(30))
 insert into comentarios(fecha_comentario, cuerpo, cod_adop) values (fec, cuerpo, adop);
 
-call usuario_comentarios_inser('2018/03/12','proceso exitoso',1);
-
-create procedure usuario_comentarios_consul(cod int(30))
-select * from comentarios where codigo_comentario=cod;
-
-call usuario_comentarios_consul(1);
-
 create procedure usuario_comentarios_actu(fec date, cuerpo varchar(255), adop int(30),cod int(30))
 update comentarios set fecha_comentario=fec, cuerpo=cuerpo, cod_adop=adop where codigo_comentario=cod;
 
-call usuario_comentarios_actu('2018/03/12','proceso exitoso',2,1);
-
 create procedure usuario_comentarios_elim(cod int(30))
 delete from comentarios where codigo_comentario=cod;
-
-call usuario_comentarios_elim(1);
-
--- Eventos
-
-create procedure usuario_eventos()
-select * from jornada; 
-
-call usuario_eventos;
-
--- Adopciones
-
-create procedure usuario_adopcion()
-select * from adopcion; 
-
-call usuario_adopcion;
 
 -- Postulacion
 
@@ -479,95 +398,17 @@ create procedure usuario_postulacion_inser(tel_con varchar(20), dir_con varchar(
 insert into postulacion (telefono_contacto,direccion_contacto,telefono_fijo,certificado_laboral,cedu,codigo_animal) 
 values (tel_con, dir_con, tel_fij, cer_lab, cedu,con_ani);
 
-call usuario_postulacion_inser('3112312324','Calle 15 # 10-25','8226512','','1001263254',4);
-
-create procedure usuario_postulacion_consul(cedul varchar(20))
-select * from postulacion where cedu=cedul;
-
-call usuario_postulacion_consul(1);
-
 create procedure usuario_postulacion_actu(tel_con varchar(20), dir_con varchar(20), tel_fij varchar(20), cer_lab varchar(255), cedul varchar(20),cod_post int(30))
-update postulacion set telefono_contacto=tel_con,direccion_contacto=dir_con,telefono_fijo=tel_fij,certificado_laboral=cer_lab,cedu=cedul where codigo_postulacion=cod_post;
+update postulacion set telefono_contacto=tel_con,direccion_contacto=dir_con,telefono_fijo=tel_fij,certificado_laboral=cer_lab where cedu=cedul and codigo_postulacion=cod_post;
 
-call usuario_postulacion_actu('3112312324','Calle 15 # 10-20','8226512','','1',4);
-
-create procedure usuario_postulacion_elim(cedul varchar(20))
-delete from postulacion where cedu=cedul;
-
-call usuario_postulacion_elim(1);
-
--- Seguimiento
-
-create procedure usuario_seguimiento()
-select * from seguimiento; 
-
-call usuario_seguimiento();
-
-/*VETERINARIA*/
-
-Create procedure Consultar_Veterinaria()
-Select * from  Veterinaria ;
-
-call Consultar_Veterinaria();
+create procedure usuario_postulacion_elim(codpost varchar(20))
+delete from postulacion where codigo_postulacion=codpost;
 
 Create procedure Modificar_Veterinaria( nit varchar(30), tel varchar(30), nom varchar(50), dir varchar(50), cla varchar(50))
 Update Veterinaria set telefono_veterinaria=tel, nombre_veterinaria=nom, direccion_veterinaria=dir, clave=cla where nit_veterinaria=nit;
 
-call Modificar_Veterinaria('811192822-A','3137425832','Veterinaria','Calle 14#32-45','veterinaria');
-
 Create procedure Eliminar_Veterinaria( nit varchar(30))
 Delete  from Veterinaria  where nit_veterinaria=nit;
-
-call Eliminar_Veterinaria('');
-
-
-/* VETERINARIA-ANIMAL*/
-
-Create procedure VetInsertar_Animal(cod int(30), nom varchar(50), tip varchar(50), eda varchar(5), raz varchar(30))
-insert into Animal
-values(codigo_animal, tipo_animal, edad_animal, raza_animal);
-
-call VetInsertar_Animal();
-
-Create procedure VetConsultar_Animal()
-Select * from  Animal ;
-
-call VetConsultar_Animal();
-
-Create procedure VetModificar_Animal( cod int(30), nom varchar(50), tip varchar(50), eda varchar(5), raz varchar(30))
-Update Animal set nombre_animal=nom, tipo_animal=tip, edad_animal=eda, raza_animal=raz where codigo_animal=cod;
-
-call VetModificar_Animal(1,'Kayn','Perro','1','Beagle');
-
-Create procedure VetEliminar_Animal( cod int(30))
-Delete from Animal where codigo_animal=cod;
-
-call VetEliminar_Animal('');
-
-
-/* VETERINARIA-MASCOTA */
-
-Create procedure VetInsertar_Mascota(cod int(30), nom varchar(50), tip varchar(50), eda varchar(5), raz varchar(30))
-insert into Mascota
-values(codigo_animal, tipo_animal, edad_animal, raza_animal);
-
-call VetInsertar_Mascota();
-
-Create procedure VetConsultar_Mascota()
-Select * from  Mascota ;
-
-call VetConsultar_Mascota();
-
-Create procedure VetModificar_Mascota( cod int(30), nom varchar(45), des varchar(30), est varchar(45), tip varchar(20), eda varchar(20), raz varchar(20), ce varchar(20))
-Update Mascota set nombre_mascota=nom, descendencia=des, estado_mascota=est ,tipo_mascota=tip, edad_Mascota=eda, raza_mascota=raz, ced=ce where codigo_mascota=cod;
-
-call VetModificar_Mascota(2,'garen','puro','Sano','gato','2','persa','1001263254');
-
-Create procedure VetEliminar_Mascota( cod int(30))
-Delete from Mascota where codigo_mascota=cod;
-
-call VetEliminar_Mascota();
-
 
 /* VETERINARIA-DENUNCIAS*/
 
@@ -576,11 +417,6 @@ insert into Denuncias
 values(codigo_denuncia, fecha_denuncia, descripcion_denuncia, cedul_ciudadano);
 
 call VetInsertar_Denuncias();
-
-Create procedure VetConsultar_Denunicas()
-Select * from  Denuncia ;
-
-call VetConsultar_Denunicas;
 
 Create procedure VetModificar_Denuncias( cod int(30), fec date, des varchar(150), ced varchar(20))
 Update Denuncia set fecha_denuncia=fec, descripcion_denuncia=des, cedul_ciudadano=ced where codigo_denuncia=cod; 
@@ -702,12 +538,6 @@ Create procedure FunEliminar_Comentarios( cod int(30))
 Delete from Comentarios where codigo_comentario=cod;
 
 call FunEliminar_Comentarios();
--- Insertar eventos
-Create procedure Insertar_Eventos(fec date, lug varchar(45), dur time, des varchar(255))
-insert into jornada
-values(fecha, lugar, duracion,descripcion);
-call Insertar_Eventos('2018-10-22','Mosquera','','Jornada de vacunacion');
-
 
 /* FUNCIONARIO-EVENTOS(Jornada) */
 
