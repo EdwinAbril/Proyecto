@@ -247,9 +247,6 @@ values
 ('2018/03/12','proceso exitoso',1),
 ('2018/02/28','proceso regular',2);
 
-
-<<<<<<< HEAD
-=======
 CREATE TABLE usuarios(
     nom_usuario VARCHAR(50) primary key,
     clave VARCHAR(50),
@@ -280,7 +277,6 @@ constraint rov foreign key (rol3) references roles(rol) on delete cascade on upd
 insert into usuario_veterinaria(nit_veterinaria,clave,rol3)
 values('811192822-A','1111',3),
 ('811192822-B','0000',3);
->>>>>>> 535c6e1bbfa0ef3ee1c98a1e8c688b979db6e85d
 
 
 -- drop table usuarios;
