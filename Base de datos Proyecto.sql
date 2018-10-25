@@ -11,16 +11,30 @@ insert into roles(rol,nombre_rol)
 values(1,'Administrador'),(2,'Funcionario'),(3,'Veterinaria'),(4,'Ciudadano');
 
 
-create table registro_usuario
+create table login_usuarios
 (nombre_usuario varchar(50) primary key,
-clave varchar(50),
-rol1 int(30),
-constraint ro foreign key (rol1) references roles(rol) on delete cascade on update cascade
+clave varchar(50) not null,
+rol_login int(30), 
+constraint ro0 foreign key (rol_login) references roles(rol) on delete cascade on update cascade
 );
 
-insert into registro_usuario(nombre_usuario,clave,rol1)
+insert into login_usuarios(nombre_usuario,clave,rol_login)
 values('AlexElCapo','1111',4),
-('JuanMakia','0000',4);
+('JuanMakia','0000',4),
+('811192822-A','veterinaria',3),
+('811192822-B','veterinaria',3),
+('811192822-C','veterinaria',3),
+('811192822-D','veterinaria',3),
+('72471422','0000',2),
+('52849421','0000',2),
+('68470826','0000',2),
+('98374971','0000',2),
+('41683731','0000',2),
+('Alf','4321',1);
+
+insert into login_usuarios(nombre_usuario,clave,rol_login)
+values ('Fla','4321',1);
+
 
 create table ciudadano
 (cedula varchar (50) primary key , 
@@ -29,7 +43,7 @@ telefono varchar (20),
 direccion varchar(45),
 correo varchar (45),
 usuario_ciu varchar(50),
-constraint usu foreign key (usuario_ciu) references registro_usuario(nombre_usuario) on delete cascade on update cascade
+constraint usu foreign key (usuario_ciu) references login_usuarios(nombre_usuario) on delete cascade on update cascade
 );
 
 insert into ciudadano(cedula,nombre,telefono,direccion,correo,usuario_ciu)
@@ -113,39 +127,39 @@ nit_veterinaria varchar(50) primary key,
 telefono_veterinaria varchar(30) not null,
 nombre_veterinaria varchar(50) not null,
 direccion_veterinaria varchar(50) not null,
-clave varchar(50),
 rol2 int(30),	
-constraint ro2 foreign key (rol2) references roles(rol) on delete cascade on update cascade
+constraint ro2 foreign key (rol2) references roles(rol) on delete cascade on update cascade,
+constraint nit foreign key (nit_veterinaria) references login_usuarios(nombre_usuario) on delete cascade on update cascade
 );
 
 -- drop table veterinaria;
 
-insert into veterinaria(nit_veterinaria,telefono_veterinaria,nombre_veterinaria,direccion_veterinaria,clave,rol2)
+insert into veterinaria(nit_veterinaria,telefono_veterinaria,nombre_veterinaria,direccion_veterinaria,rol2)
 values 
-('811192822-A','3137425832','Mis patitas','Calle 14#32-45','veterinaria',3),
-('811192822-B','3142315647','Mis huellitas','Calle 13#05-45','veterinaria',3),
-('811192822-C','3153216798','Mis mascotas','Calle 23#34-25','veterinaria',3),
-('811192822-D','3113216547','Guau y miau','Calle 11#13-22','veterinaria',3);
+('811192822-A','3137425832','Mis patitas','Calle 14#32-45',3),
+('811192822-B','3142315647','Mis huellitas','Calle 13#05-45',3),
+('811192822-C','3153216798','Mis mascotas','Calle 23#34-25',3),
+('811192822-D','3113216547','Guau y miau','Calle 11#13-22',3);
 
 create table funcionario (
 cedula_funcionario varchar(50) primary key,
 telefono_funcionario varchar(30) not null,
 nombre_funcionario varchar (50) not null,
 correo_funcionario varchar (100) not null,
-clave varchar(100),
 rol3 int(30),
-constraint ro3 foreign key (rol3) references roles(rol) on delete cascade on update cascade
+constraint ro3 foreign key (rol3) references roles(rol) on delete cascade on update cascade,
+constraint ced foreign key (cedula_funcionario) references login_usuarios(nombre_usuario) on delete cascade on update cascade
 );
 
 -- drop table funcionario;
 
-insert into funcionario(cedula_funcionario,telefono_funcionario,nombre_funcionario,correo_funcionario,clave,rol3)
+insert into funcionario(cedula_funcionario,telefono_funcionario,nombre_funcionario,correo_funcionario,rol3)
 values
-('72471422','3216440371','Manuel','manuelito@gmail.com','0000',2),
-('52849421','3135487561','Lucas','luquitas@gmail.com','0000',2),
-('68470826','3116548712','Juan','juansito@gmail.com','0000',2),
-('98374971','3135487654','Ivan','ivansito@gmail.com','0000',2),
-('41683731','3106547875','Sergio','sergiofon@gmail.com','0000',2);
+('72471422','3216440371','Manuel','manuelito@gmail.com',2),
+('52849421','3135487561','Lucas','luquitas@gmail.com',2),
+('68470826','3116548712','Juan','juansito@gmail.com',2),
+('98374971','3135487654','Ivan','ivansito@gmail.com',2),
+('41683731','3106547875','Sergio','sergiofon@gmail.com',2);
 
 create table mascota
 (codigo_mascota int (30) auto_increment primary key ,
@@ -233,36 +247,6 @@ values
 ('2018/02/28','proceso regular',2);
 
 
-CREATE TABLE usuarios(
-    nom_usuario VARCHAR(50) primary key,
-    clave VARCHAR(50),
-    rol4 int(30),
-    constraint ro4 foreign key (rol4) references roles(rol) on delete cascade on update cascade
-);
-
-insert into usuarios(nom_usuario,clave,rol5) values
-('Alf','4321',1);
-
-create table usuario_funcionario
-(cedula_fun varchar (50) primary key,
-clave varchar(50),
-rol2 int(30),
-constraint rof foreign key (rol2) references roles(rol) on delete cascade on update cascade
-);
-insert into usuario_funcionario(cedula_fun,clave,rol2)
-values('9907162019','1111',2),
-('1001263254','0000',2);
-
-create table usuario_veterinaria
-(
-nit_veterinaria varchar(50) primary key,
-clave varchar(50),
-rol3 int(30),
-constraint rov foreign key (rol3) references roles(rol) on delete cascade on update cascade
-);
-insert into usuario_veterinaria(nombre_usuario,clave,rol3)
-values('811192822-A','1111',3),
-('811192822-B','0000',3);
 
 
 -- drop table usuarios;
@@ -304,7 +288,7 @@ insert into animal (nombre_animal,tipo_animal,edad_animal,raza_animal,foto) valu
 
 /*Modificar Animal*/
 create procedure act_animal_Admin(codigo int(30),nombre varchar(50), tipo varchar(50),edad varchar(5),raza varchar(30))
-update animal set codigo_animal=codigo,nombre_animal=nombre,tipo_animal=tipo,edad_animal=edad,raza_animal=raza where codigo_animal=codigo;
+update animal set nombre_animal=nombre,tipo_animal=tipo,edad_animal=edad,raza_animal=raza where codigo_animal=codigo;
 
 /*Borrar Animal*/
 create procedure bor_animal_Admin(codigo int(30))
@@ -329,11 +313,14 @@ insert into usuarios values(us,cla);
 
 /*Modificar Administrador*/
 create procedure act_admin_Admin(us varchar(50),cla varchar(50))
-update usuarios set clave=cla where usuario=us;
+update login_usuarios set clave=cla where nombre_usuario=us;
 
+-- drop procedure act_admin_Admin;
 /*Eliminar Administrador*/
 create procedure bor_admin_Admin(us varchar(50))
-delete from usuarios where usuario=us;
+delete from login_usuarios where nombre_usuario=us;
+
+-- drop procedure bor_admin_Admin;
 
 /*Procedures Administrador(Veterinaria)*/
 /*Insertar Veterinaria*/
@@ -416,12 +403,8 @@ Create procedure VetInsertar_Denuncias(cod int(30), fec date, des varchar(150), 
 insert into Denuncias
 values(codigo_denuncia, fecha_denuncia, descripcion_denuncia, cedul_ciudadano);
 
-call VetInsertar_Denuncias();
-
 Create procedure VetModificar_Denuncias( cod int(30), fec date, des varchar(150), ced varchar(20))
 Update Denuncia set fecha_denuncia=fec, descripcion_denuncia=des, cedul_ciudadano=ced where codigo_denuncia=cod; 
-
-call VetModificar_Denuncias(2,'2018/04/26','abandono','1001263254');
 
 /* VETERINARIA-COMENTARIOS */
 
@@ -429,29 +412,23 @@ Create procedure VetInsertar_Comentarios(cod int(30), fec date, cue varchar(255)
 insert into Comentarios
 values(codigo_comentarios, fecha_comentario, cuerpo_comentario, cod_adop);
 
-call VetInsertar_Comentarios();
 
 Create procedure VetConsultar_Comentarios()
 Select * from  Comentarios ;
 
-call VetConsultar_Comentarios;
 
 Create procedure VetModificar_Comentarios( cod int(30), fec date, cue varchar(255), cda int(30))
 Update Comentarios set fecha_comentario=fec, cuerpo=cue, cod_adop=cda where codigo_comentario=cod; 
 
-call VetModificar_Comentarios(01,'2018/03/12','proceso exitoso',1);
-
 Create procedure VetEliminar_Comentarios( cod int(30))
 Delete from Comentarios where codigo_comentario=cod;
 
-call VetEliminar_Comentarios();
 
 /* VETERINARIA-EVENTOS(jornada) */
 
 Create procedure VetConsultar_Jornada()
 Select * from  Jornada ;
 
-call VetConsultar_Jornada;
 
 /* VETERINARIA-ADOPCIONES */
 
@@ -459,22 +436,14 @@ Create procedure VetInsertar_Adopcion(cod int(30), cdan int(30), cods int(30))
 insert into Adopcion
 values(codigo_adopcion, codigo_ani, codigo_seg);
 
-call VetInsertar_Adopcion();
-
 Create procedure VetConsultar_Adopcion()
 Select * from  Adopcion ;
-
-call VetConsultar_Adopcion;
 
 Create procedure VetModificar_Adopcion( cod int(30), cdan int(30), cods int(30))
 Update Adopcion set cod_ani=cdan, cod_seg=cods where codigo_adopcion=cod; 
 
-call VetModificar_Adopcion(1,5,1);
-
 Create procedure VetEliminar_Adopcion( cod int(30))
 Delete from Adopcion where codigo_adopcion=cod;
-
-call VetEliminar_Adopcion();
 
 
 
@@ -484,60 +453,39 @@ call VetEliminar_Adopcion();
 Create procedure FunConsultar_Usuario()
 Select * from  Ciudadano ;
 
-call FunConsultar_Usuario;
 
 /* FUNCIONARRIO-VETERINARIA */
 
 Create procedure FunConsultar_Veterinaria()
 Select * from  Veterinaria ; 
 
-call FunConsultar_Veterinaria;
 
 /* FUNCIONARIO */
 
-Create procedure Consultar_Funcionario()
-Select * from  Funcionario ;
 
-call Consultar_Funcionario;
-
-Create procedure Modificar_Funcionario( ced varchar(30), tel varchar(30), nom varchar(50), cor varchar(100), cla varchar(100))
-Update Funcionario set telefono_funcionario=tel, nombre_funcionario=nom, correo_funcionario=cor, clave=cla where cedula_funcionario=ced; 
-
-call Modificar_Funcionario('72471422','3216440371','Manuel','manuelito@gmail.com','0000');
-
-Create procedure Eliminar_Funcionario( ced varchar(30))
-Delete from Funcionario where cedula_ciudadano=ced;
-
-call Eliminar_Funcionario();
 
 /* FUNCIONARIO-DENUNCIAS */
 
 Create procedure FunConsultar_Denuncia()
 Select * from  Denuncia ;
 
-call FunConsultar_Denuncia;
 
 Create procedure FunModificar_Denuncia( cod int(30), fec date, des varchar(150), var varchar(20))
 Update Denuncia set fecha_denuncia=fec, descripcion_denuncia=des where codigo_denuncia=cod; 
 
-call FunModificar_Denuncia(2,'2018/04/26','abandono','1001263254');
-
 Create procedure FunEliminar_Denuncia( cod int(30))
 Delete from Denuncia where codigo_denuncia=cod;
 
-call Eliminar_Funcionario();
 
 /* FUNCIONARIO-COMENTARIOS */
 
 Create procedure FunConsultar_Comentarios()
 Select * from  Comentarios ;
 
-call FunConsultar_Comentarios;
 
 Create procedure FunEliminar_Comentarios( cod int(30))
 Delete from Comentarios where codigo_comentario=cod;
 
-call FunEliminar_Comentarios();
 
 /* FUNCIONARIO-EVENTOS(Jornada) */
 
@@ -545,22 +493,18 @@ Create procedure FunInsertar_Eventos(cod int(30), fec date, lug varchar(45), dur
 insert into Jornada
 values(codigo_jornada, fecha, lugar, duracion);
 
-call FunInsertar_Eventos();
 
 Create procedure FunConsultar_Eventos()
 Select * from  Jornada ;
 
-call FunConsultar_Eventos;
+Create procedure FunModificar_Eventos( cod int(30), fec date, lug varchar(45), dur time, des varchar(255))
+Update jornada set fecha=fec, lugar=lug, duracion=dur, descripcion=des where codigo_jornada=cod; 
 
-Create procedure FunModificar_Eventos( cod int(30), fec date, lug varchar(45), dur time)
-Update Jornada set fecha=fec, lugar=lug, duracion=dur where codigo_jornada=cod; 
-
-call FunModificar_Eventos(1,'2018/05/16','Parque Central','02:00:00');
+-- drop procedure FunModificar_Eventos;
 
 Create procedure FunEliminar_Eventos( cod int(30))
 Delete from Jornada where codigo_jornada=cod;
 
-call FunEliminar_Eventos();
 
 /* FUNCIONARIO-SEGUIMIENTO */
 
@@ -568,22 +512,14 @@ Create procedure FunInsertar_Seguimiento(cod int(30), cdp int(30))
 insert into Seguimiento
 values(codigo_seguimiento, codigo_postulacion);
 
-call FunInsertar_Seguimiento();
-
 Create procedure FunConsultar_Seguimiento()
 Select * from  Seguimiento ;
-
-call FunConsultar_Seguimiento;
 
 Create procedure FunModificar_Seguimiento( cod int(30), cdp int(30))
 Update Seguimiento set cod_postula=cdp where codigo_Seguimiento=cod; 
 
-call FunModificar_Seguimiento(1,1);
-
 Create procedure FunEliminar_Seguimiento( cod int(30))
 Delete from Seguimiento where codigo_Seguimiento=cod;
-
-call FunEliminar_Seguimiento();
 
 
 /*CONSULTA 1 */
