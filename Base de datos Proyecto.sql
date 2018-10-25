@@ -193,7 +193,8 @@ fecha_denuncia date,
 descripcion_denuncia varchar(150),
 cedul_ciudadano varchar(20),
 constraint ciudadanos foreign key (cedul_ciudadano) references ciudadano (cedula) on delete cascade on update cascade);
-
+alter table denuncia add mensaje varchar(250);
+alter table denuncia add foto varchar(250);
 -- drop table denuncia; 
 
 insert into denuncia (fecha_denuncia,descripcion_denuncia,cedul_ciudadano)
@@ -240,7 +241,7 @@ CREATE TABLE usuarios(
     constraint ro4 foreign key (rol4) references roles(rol) on delete cascade on update cascade
 );
 
-insert into usuarios(nom_usuario,clave,rol5) values
+insert into usuarios(nom_usuario,clave,rol4) values
 ('Alf','4321',1);
 
 create table usuario_funcionario
@@ -260,7 +261,7 @@ clave varchar(50),
 rol3 int(30),
 constraint rov foreign key (rol3) references roles(rol) on delete cascade on update cascade
 );
-insert into usuario_veterinaria(nombre_usuario,clave,rol3)
+insert into usuario_veterinaria(nit_veterinaria,clave,rol3)
 values('811192822-A','1111',3),
 ('811192822-B','0000',3);
 
@@ -337,9 +338,9 @@ delete from usuarios where usuario=us;
 
 /*Procedures Administrador(Veterinaria)*/
 /*Insertar Veterinaria*/
-create procedure inser_veter_Admin(nit varchar(30),tel varchar(30),nombre varchar(50),dir varchar(50),clave varchar(50))
-insert into veterinaria values(nit,tel,nombre,dir,clave);
-
+create procedure inser_veter_Admin(nit varchar(30),tel varchar(30),nombre varchar(50),dir varchar(50),clave varchar(50),rol int(30))
+insert into veterinaria (nit_veterinaria,telefono_veterinaria,nombre_veterinaria,direccion_veterinaria,clave,rol2) values(nit,tel,nombre,dir,clave,rol);
+call inser_veter_Admin('811192822-Z','','','','',3);
 /*Modificar Veterinaria*/
 create procedure act_veter_Admin(nit varchar(30),tel varchar(30),nombre varchar(50),dir varchar(50),cla varchar(50))
 update veterinaria set telefono_veterinaria=tel,nombre_veterinaria=nombre,direccion_veterinaria=dir,clave=cla where nit_veterinaria=nit;
@@ -351,8 +352,10 @@ delete from veterinaria where nit_veterinaria=nit;
 
 /*Procedures Administrador (Funcionario)*/
 /*Insertar Funcionario*/
-create procedure inser_fun_Admin(cedula varchar(30),telefono varchar(30),nombre varchar(50),correo varchar(100),clave varchar(100))
-insert into funcionario  values(cedula,telefono,nombre,correo,clave);
+
+
+create procedure inser_fun_Admin(cedula varchar(30),telefono varchar(30),nombre varchar(50),correo varchar(100),claves varchar(100),rol int(30))
+insert into funcionario  (cedula_funcionario,telefono_funcionario,nombre_funcionario,correo_funcionario,clave,rol3)values(cedula,telefono,nombre,correo,claves,rol);
 
 /*Modificar Funcionario*/
 Create procedure Modificar_Funcionario( ced varchar(30), tel varchar(30), nom varchar(50), cor varchar(100), cla varchar(100))
@@ -378,8 +381,8 @@ delete from mascota where ced=cedu;
 
 -- Denuncia
 
-create procedure usuario_denuncia_inser(fec_den date, descrip varchar(150), cedul varchar(20))
-insert into denuncia (fecha_denuncia,descripcion_denuncia,cedul_ciudadano) values (fec_den, descrip, cedul);
+create procedure inser_denuncia(fec_den date, descrip varchar(150), cedul varchar(20),men varchar(250),imagen varchar(250))
+insert into denuncia (fecha_denuncia,descripcion_denuncia,cedul_ciudadano,mensaje,foto) values (fec_den, descrip, cedul,men,imagen);
 
 -- Comentarios
 
@@ -545,7 +548,7 @@ Create procedure FunInsertar_Eventos(cod int(30), fec date, lug varchar(45), dur
 insert into Jornada
 values(codigo_jornada, fecha, lugar, duracion);
 
-call FunInsertar_Eventos();
+call FunInsertar_Eventos('2018/10/26','Funza','2:00:am','Aqui');
 
 Create procedure FunConsultar_Eventos()
 Select * from  Jornada ;
@@ -555,7 +558,7 @@ call FunConsultar_Eventos;
 Create procedure FunModificar_Eventos( cod int(30), fec date, lug varchar(45), dur time)
 Update Jornada set fecha=fec, lugar=lug, duracion=dur where codigo_jornada=cod; 
 
-call FunModificar_Eventos(1,'2018/05/16','Parque Central','02:00:00');
+
 
 Create procedure FunEliminar_Eventos( cod int(30))
 Delete from Jornada where codigo_jornada=cod;
@@ -564,11 +567,9 @@ call FunEliminar_Eventos();
 
 /* FUNCIONARIO-SEGUIMIENTO */
 
-Create procedure FunInsertar_Seguimiento(cod int(30), cdp int(30))
-insert into Seguimiento
-values(codigo_seguimiento, codigo_postulacion);
-
-call FunInsertar_Seguimiento();
+Create procedure inser_seg(cdp int(30))
+insert into seguimiento (cod_postula) values(cdp);
+call inser_seg('3');
 
 Create procedure FunConsultar_Seguimiento()
 Select * from  Seguimiento ;
