@@ -77,22 +77,22 @@ create table jornada
 (codigo_jornada int (30) auto_increment primary key ,
 fecha date,
 lugar varchar(45),
-duracion time);
+duracion text);
 
 alter table jornada add descripcion varchar(255);
 
 insert into jornada(fecha,lugar,duracion)
 values
-('2018/05/16','Parque Central','02:00:00'),
-('2018/02/23','Parque de Mosquera','04:00:00'),
-('2018/01/10','Parque Mi Mascota','03:00:00'),
-('2017/04/15','Parque Las Aguas','04:30:00'),
-('2019/12/10','Parque Las Aguas','06:00:00'),
-('2018/03/25','Parque Sabana','04:20:00'),
-('2018/09/30','Parque Mi Mascota','05:00:00'),
-('2018/07/16','Parque Mi Mascota','06:00:00'),
-('2018/01/27','Parque Sabana','05:00:00'),
-('2018/02/10','Parque Central','04:00:00');
+('2018/05/16','Parque Central','2 horas'),
+('2018/02/23','Parque de Mosquera','3 horas'),
+('2018/01/10','Parque Mi Mascota','3 horas'),
+('2017/04/15','Parque Las Aguas','3 horas'),
+('2019/12/10','Parque Las Aguas','3 horas'),
+('2018/03/25','Parque Sabana','3 horas'),
+('2018/09/30','Parque Mi Mascota','3 horas'),
+('2018/07/16','Parque Mi Mascota','3 horas'),
+('2018/01/27','Parque Sabana','3 horas'),
+('2018/02/10','Parque Central','3 horas');
 
 
 create table postulacion
@@ -171,6 +171,7 @@ edad_mascota varchar(20),
 raza_mascota varchar (20),
 ced varchar (20),
 constraint ciuda foreign key (ced) references ciudadano (cedula) on delete cascade on update cascade);
+alter table mascota add foto varchar(250);
 
 insert into mascota(nombre_mascota,descendencia,estado_mascota,tipo_mascota,edad_mascota,raza_mascota,ced)
 values
@@ -284,8 +285,8 @@ values('811192822-A','1111',3),
 
 /*ADMINISTRADOR*/
 /*Insertar Administrador*/
-create procedure inser_admin_Admin(us varchar(50),cla varchar(50))
-insert into usuarios values(us,cla);
+create procedure inser_admin_Admin(us varchar(50),cla varchar(50),rol int(30))
+insert into usuarios (nom_usuario,clave,rol4)values(us,cla,rol);
 
 /*Modificar Administrador*/
 create procedure act_admin_Admin(us varchar(50),cla varchar(50))
@@ -371,8 +372,9 @@ Delete from Denuncia where codigo_denuncia=cod;
 /*EVENTOS (JORNADAS)*/
 
 /*Insertar Eventos*/
-Create procedure FunInsertar_Eventos(cod int(30), fec date, lug varchar(45), dur time)
-insert into Jornada values(codigo_jornada, fecha, lugar, duracion);
+Create procedure FunInsertar_Eventos(fec date, lug varchar(45), dur text,des varchar(255))
+insert into Jornada (fecha, lugar, duracion,descripcion) values(fec,lug,dur,des) ;
+
 
 /*Modificar Eventos*/
 Create procedure FunModificar_Eventos( cod int(30), fec date, lug varchar(45), dur time, des varchar(255))
@@ -400,8 +402,8 @@ Delete from Funcionario where cedula_funcionario=ced;
 /*MASCOTA*/
 
 /*Insertar Mascota*/
-create procedure usuario_mascota_inser(cod_mas int(30), nom_mas varchar(30), descen varchar(30), esta_mas varchar(45), tip_mas varchar(20), edad_mas varchar(20), raza_mas varchar(20), cedu varchar(20))
-insert into mascota values (cod_mas, nom_mas, descen, esta_mas, tip_mas, edad_mas, raza_mas, cedu);
+create procedure usuario_mascota_inser(nom_mas varchar(30), descen varchar(30), esta_mas varchar(45), tip_mas varchar(20), edad_mas varchar(20), raza_mas varchar(20), cedu varchar(20),fot varchar(250))
+insert into mascota (nombre_mascota,descendencia,estado_mascota,tipo_mascota,edad_mascota,raza_mascota,ced,foto) values (nom_mas, descen, esta_mas, tip_mas, edad_mas, raza_mas, cedu,fot) ;
 
 /*Modificar Mascota*/
 create procedure usuario_mascota_actu(cod_mas int(30), nom_mas varchar(30), descen varchar(30), esta_mas varchar(45), tip_mas varchar(20), edad_mas varchar(20), raza_mas varchar(20), cedu varchar(20))
@@ -453,6 +455,21 @@ update veterinaria set telefono_veterinaria=tel,nombre_veterinaria=nombre,direcc
 create procedure bor_veter_Admin(nit varchar(30))
 delete from veterinaria where nit_veterinaria=nit;
 
+/*USUARIO VETERINARIA*/
+/*Insertar  USUARIO Veterinaria*/
+create procedure inser_usu_vet(us varchar(50),cla varchar(50),rol int(30))
+insert into usuario_veterinaria (nit_veterinaria,clave,rol3) values(us,cla,rol);
+
+
+/*USUARIO FUNCIONARIO*/
+/*Insertar  USUARIO FUNCIONARIO*/
+create procedure inser_usu_func(ced varchar(50),cla varchar(50),rol int(30))
+insert into usuario_funcionario (cedula_fun,clave,rol2) values(ced,cla,rol);
+
+/*USUARIO Ciudadano*/
+/*Insertar  USUARIO Ciudadano*/
+create procedure inser_usu_ciud(nom varchar(50),cla varchar(50),rol int(30))
+insert into login_usuarios (nombre_usuario,clave,rol_login) values(nom,cla,rol);
 
 /*CONSULTA 1 */
 select nombre,cedula,correo,nombre_mascota,raza_mascota from ciudadano
@@ -498,7 +515,7 @@ select fecha_denuncia,descripcion_denuncia,cedul_ciudadano ,fecha_respuesta from
 inner join respuesta  on denuncia.codigo_denuncia=respuesta.cod_denu 
 where month(fecha_respuesta)='06';
 
-/*CONSUTA 10*/
+/*CONSUTA 10*a/
 select nombre,telefono,nombre_mascota,raza_mascota from ciudadano
 inner join mascota on ciudadano.cedula=mascota.ced
 where estado_mascota='operado';
