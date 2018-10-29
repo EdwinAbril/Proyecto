@@ -302,11 +302,10 @@ delete from login_usuarios where nombre_usuario=us;
 /* ADOPCIONES */
 
 Create procedure VetInsertar_Adopcion(cod int(30), cdan int(30), cods int(30))
-insert into Adopcion
-values(codigo_adopcion, codigo_ani, codigo_seg);
+insert into Adopcion values(codigo_adopcion, codigo_ani, codigo_seg);
 
-Create procedure VetModificar_Adopcion( cod int(30), cdan int(30), cods int(30))
-Update Adopcion set cod_ani=cdan, cod_seg=cods where codigo_adopcion=cod; 
+Create procedure VetModificar_Adopcion( cod int(30), cdan int(30), cods int(30),mens varchar(100))
+Update Adopcion set cod_ani=cdan, cod_seg=cods, mensaje=mens where codigo_adopcion=cod;
 
 Create procedure VetEliminar_Adopcion( cod int(30))
 Delete from Adopcion where codigo_adopcion=cod;
