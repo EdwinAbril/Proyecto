@@ -59,6 +59,11 @@ edad_animal varchar(5) not null,
 raza_animal varchar(30) not null
 );
 alter table animal add foto varchar(255);
+alter table animal add tamaño varchar(30);
+alter table animal add genero varchar(30);
+alter table animal add color varchar(30);
+
+
 
 insert into animal(nombre_animal,tipo_animal,edad_animal,raza_animal)
 values
@@ -315,8 +320,8 @@ Delete from Adopcion where codigo_adopcion=cod;
 /*ANIMAL*/
 
 /*Insertar Animal*/
-create procedure inser_animal_Admin(nombre varchar(50),tipo varchar(50),edad varchar(5),raza varchar(30),imagen varchar(255))
-insert into animal (nombre_animal,tipo_animal,edad_animal,raza_animal,foto) values (nombre,tipo,edad,raza,imagen);
+create procedure inser_animal_Admin(nombre varchar(50),tipo varchar(50),edad varchar(5),raza varchar(30),imagen varchar(255),tama varchar(30),gen varchar(30),col varchar(30))
+insert into animal (nombre_animal,tipo_animal,edad_animal,raza_animal,foto,tamaño,genero,color) values (nombre,tipo,edad,raza,imagen,tama,gen,col);
 -- drop procedure inser_animal_Admin;
 
 /*Modificar Animal*/
