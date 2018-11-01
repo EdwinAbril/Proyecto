@@ -292,7 +292,7 @@ values('811192822-A','1111',3),
 /*Insertar Administrador*/
 create procedure inser_admin_Admin(us varchar(50),cla varchar(50),rol int(30))
 insert into login_usuarios (nombre_usuario,clave,rol_login)values(us,cla,rol);
-
+call inser_admin_Admin('lol','123',1);
 
 /*Modificar Administrador*/
 create procedure act_admin_Admin(us varchar(50),cla varchar(50))
@@ -480,6 +480,10 @@ insert into login_usuarios (nombre_usuario,clave,rol_login) values(nom,cla,rol);
 create procedure inser_fun_ciud(nom varchar(50))
 insert into ciudadano(usurio_ciu) values (nom);
 
+create procedure inser_us_vet(nit varchar(50),rol int(30))
+insert into veterinaria (nit_veterinaria,rol2) values(nit,rol);
+call inser_us_vet('8901',3);
+
 /*CONSULTA 1 */
 select nombre,cedula,correo,nombre_mascota,raza_mascota from ciudadano
 inner join mascota on ciudadano.cedula = mascota.ced
@@ -489,6 +493,8 @@ where tipo_mascota ='perro';
 select nombre,cedula,correo,nombre_mascota,raza_mascota from ciudadano
 inner join mascota on ciudadano.cedula = mascota.ced
 where tipo_mascota ='gato';
+
+
 
 /*CONSULTA 3 */
 select codigo_mascota,nombre_mascota,estado_mascota,tipo_mascota,edad_mascota,raza_mascota,ced as Cedula,fecha,lugar,duracion from mascota
