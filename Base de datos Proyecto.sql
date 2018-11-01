@@ -1,6 +1,6 @@
 create database Proyecto;
 use Proyecto;
--- adrop database Proyecto;
+-- drop database Proyecto;
 
 create table roles
 (rol int(30) primary key,
