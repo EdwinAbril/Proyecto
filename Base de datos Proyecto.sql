@@ -325,8 +325,10 @@ insert into animal (nombre_animal,tipo_animal,edad_animal,raza_animal,foto,tama√
 -- drop procedure inser_animal_Admin;
 
 /*Modificar Animal*/
-create procedure act_animal_Admin(codigo int(30),nombre varchar(50), tipo varchar(50),edad varchar(5),raza varchar(30))
-update animal set nombre_animal=nombre,tipo_animal=tipo,edad_animal=edad,raza_animal=raza where codigo_animal=codigo;
+create procedure act_animal_Admin(codigo int(30),nombre varchar(50), tipo varchar(50),edad varchar(5),raza varchar(30),tama varchar(30),gene varchar(30), colo varchar(30))
+update animal set nombre_animal=nombre,tipo_animal=tipo,edad_animal=edad,raza_animal=raza, tama√±o=tama, genero=gene, color=colo where codigo_animal=codigo;
+
+-- drop procedure act_animal_Admin;
 
 /*Borrar Animal*/
 create procedure bor_animal_Admin(codigo int(30))
@@ -524,7 +526,7 @@ select fecha_denuncia,descripcion_denuncia,cedul_ciudadano ,fecha_respuesta from
 inner join respuesta  on denuncia.codigo_denuncia=respuesta.cod_denu 
 where month(fecha_respuesta)='06';
 
-/*CONSUTA 10*a/
+/*CONSUTA 10*/
 select nombre,telefono,nombre_mascota,raza_mascota from ciudadano
 inner join mascota on ciudadano.cedula=mascota.ced
 where estado_mascota='operado';
