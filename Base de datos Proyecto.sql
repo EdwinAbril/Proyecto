@@ -286,7 +286,8 @@ values('811192822-A','1111',3),
 /*ADMINISTRADOR*/
 /*Insertar Administrador*/
 create procedure inser_admin_Admin(us varchar(50),cla varchar(50),rol int(30))
-insert into usuarios (nom_usuario,clave,rol4)values(us,cla,rol);
+insert into login_usuarios (nombre_usuario,clave,rol_login)values(us,cla,rol);
+
 
 /*Modificar Administrador*/
 create procedure act_admin_Admin(us varchar(50),cla varchar(50))
@@ -388,9 +389,8 @@ Delete from Jornada where codigo_jornada=cod;
 /*FUNCIONARIO*/
 
 /*Insertar Funcionario*/
-create procedure Insertar_Funcionario(cedula varchar(30),telefono varchar(30),nombre varchar(50),correo varchar(100),claves varchar(100),rol int(30))
-insert into funcionario  (cedula_funcionario,telefono_funcionario,nombre_funcionario,correo_funcionario,clave,rol3)values(cedula,telefono,nombre,correo,claves,rol);
-
+create procedure Insertar_Funcionario(cedula varchar(30),telefono varchar(30),nombre varchar(50),correo varchar(100),rol int(30))
+insert into funcionario  (cedula_funcionario,telefono_funcionario,nombre_funcionario,correo_funcionario,rol3)values(cedula,telefono,nombre,correo,rol);
 /*Modificar Funcionario*/
 Create procedure Modificar_Funcionario( ced varchar(30), tel varchar(30), nom varchar(50), cor varchar(100), cla varchar(100))
 Update Funcionario set telefono_funcionario=tel, nombre_funcionario=nom, correo_funcionario=cor, clave=cla where cedula_funcionario=ced; 
@@ -458,18 +458,22 @@ delete from veterinaria where nit_veterinaria=nit;
 /*USUARIO VETERINARIA*/
 /*Insertar  USUARIO Veterinaria*/
 create procedure inser_usu_vet(us varchar(50),cla varchar(50),rol int(30))
-insert into usuario_veterinaria (nit_veterinaria,clave,rol3) values(us,cla,rol);
-
+insert into login_usuarios (nombre_usuario,clave,rol_login) values(us,cla,rol);
 
 /*USUARIO FUNCIONARIO*/
 /*Insertar  USUARIO FUNCIONARIO*/
 create procedure inser_usu_func(ced varchar(50),cla varchar(50),rol int(30))
-insert into usuario_funcionario (cedula_fun,clave,rol2) values(ced,cla,rol);
+insert into login_usuarios (nombre_usuario,clave,rol_login) values(ced,cla,rol);
 
+create procedure inser_fun_func(ced varchar(50),rol int(30))
+insert into funcionario(cedula_funcionario,rol3) values (ced,rol);
 /*USUARIO Ciudadano*/
 /*Insertar  USUARIO Ciudadano*/
 create procedure inser_usu_ciud(nom varchar(50),cla varchar(50),rol int(30))
 insert into login_usuarios (nombre_usuario,clave,rol_login) values(nom,cla,rol);
+
+create procedure inser_fun_ciud(nom varchar(50))
+insert into ciudadano(usurio_ciu) values (nom);
 
 /*CONSULTA 1 */
 select nombre,cedula,correo,nombre_mascota,raza_mascota from ciudadano
