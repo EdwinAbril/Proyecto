@@ -331,9 +331,10 @@ update animal set nombre_animal=nombre,tipo_animal=tipo,edad_animal=edad,raza_an
 -- drop procedure act_animal_Admin;
 
 /*Borrar Animal*/
-create procedure bor_animal_Admin(codigo int(30))
-delete from animal where codigo_animal=codigo;
+create procedure bor_animal_Admin(codig int(30))
+delete from animal where codigo_animal=codig;
 
+-- drop procedure bor_animal_Admin;
 
 /*CIUDADANO*/
 
@@ -390,9 +391,10 @@ Update jornada set fecha=fec, lugar=lug, duracion=dur, descripcion=des where cod
 -- drop procedure FunModificar_Eventos;
 
 /*Eliminar Eventos*/
-Create procedure FunEliminar_Eventos( cod int(30))
-Delete from Jornada where codigo_jornada=cod;
+Create procedure FunEliminar_Eventos( codi int(30))
+Delete from jornada where codigo_jornada=codi;
 
+-- drop procedure FunEliminar_Eventos;
 /*FUNCIONARIO*/
 
 /*Insertar Funcionario*/
@@ -403,9 +405,10 @@ Create procedure Modificar_Funcionario( ced varchar(30), tel varchar(30), nom va
 Update Funcionario set telefono_funcionario=tel, nombre_funcionario=nom, correo_funcionario=cor, clave=cla where cedula_funcionario=ced; 
 
 /*Eliminar Funcionario*/
-Create procedure Eliminar_Funcionario( ced varchar(30))
-Delete from Funcionario where cedula_funcionario=ced;
+Create procedure Eliminar_Funcionario( cedu varchar(30))
+Delete from funcionario where cedula_funcionario=cedu;
 
+-- drop procedure Eliminar_Funcionario;
 /*MASCOTA*/
 
 /*Insertar Mascota*/
@@ -417,8 +420,10 @@ create procedure usuario_mascota_actu(cod_mas int(30), nom_mas varchar(30), desc
 update mascota set nombre_mascota=nom_mas, descendencia=descen, estado_mascota=esta_mas, tipo_mascota=tip_mas, edad_mascota=edad_mas, raza_mascota=raza_mas where ced=cedu and codigo_mascota=cod_mas;
 
 /*Eliminar Mascota*/
-create procedure usuario_mascota_elim(cedu varchar(20))
-delete from mascota where ced=cedu;
+create procedure usuario_mascota_elim(cod varchar(20))
+delete from mascota where codigo_mascota=cod;
+
+-- drop procedure usuario_mascota_elim;
 
 /*POSTULACION*/
 
@@ -484,56 +489,58 @@ insert into ciudadano(usurio_ciu) values (nom);
 
 create procedure inser_us_vet(nit varchar(50),rol int(30))
 insert into veterinaria (nit_veterinaria,rol2) values(nit,rol);
-call inser_us_vet('8901',3);
+/*
 
-/*CONSULTA 1 */
+-- CONSULTA 1
 select nombre,cedula,correo,nombre_mascota,raza_mascota from ciudadano
 inner join mascota on ciudadano.cedula = mascota.ced
 where tipo_mascota ='perro';
 
-/*CONSULTA 2 */
+-- CONSULTA 2 
 select nombre,cedula,correo,nombre_mascota,raza_mascota from ciudadano
 inner join mascota on ciudadano.cedula = mascota.ced
 where tipo_mascota ='gato';
 
 
 
-/*CONSULTA 3 */
+-- CONSULTA 3
 select codigo_mascota,nombre_mascota,estado_mascota,tipo_mascota,edad_mascota,raza_mascota,ced as Cedula,fecha,lugar,duracion from mascota
 inner join asiste on mascota.codigo_mascota =asiste.cod_mascota
 inner join jornada on asiste.cod_jornada=jornada.codigo_jornada
 where duracion>'03:00:00';
 
-/*CONSULTA 4 */
+-- CONSULTA 4 
 select nombre_animal,edad_animal,raza_animal from animal
 where tipo_animal='perro';
 
-/*CONSULTA 5*/
+-- CONSULTA 5
 select nombre_animal,edad_animal,raza_animal from animal
 where tipo_animal='gato';
 
-/*CONSULTA 6*/
+-- CONSULTA 6
 select codigo_mascota,nombre_mascota,estado_mascota,tipo_mascota,edad_mascota,raza_mascota,ced as Cedula,fecha,lugar,duracion from mascota
 inner join asiste on mascota.codigo_mascota =asiste.cod_mascota
 inner join jornada on asiste.cod_jornada=jornada.codigo_jornada
 where lugar='parque las aguas';
  
- /*CONSULTA 7*/
+ -- CONSULTA 7
 select nombre,direccion,telefono,descripcion_denuncia from ciudadano
 inner join denuncia on ciudadano.cedula=denuncia.cedul_ciudadano
 where descripcion_denuncia='abandono';
 
-/*CONSULTA 8*/
+-- CONSULTA 8
 select lugar,duracion,fecha from jornada
 where month(fecha)='02';
 
-/*CONSULTA 9*/
+-- CONSULTA 9
 select fecha_denuncia,descripcion_denuncia,cedul_ciudadano ,fecha_respuesta from denuncia
 inner join respuesta  on denuncia.codigo_denuncia=respuesta.cod_denu 
 where month(fecha_respuesta)='06';
 
-/*CONSUTA 10*/
+-- CONSUTA 10
 select nombre,telefono,nombre_mascota,raza_mascota from ciudadano
 inner join mascota on ciudadano.cedula=mascota.ced
 where estado_mascota='operado';
 insert into usuarios(nom_usuario,clave,rol5) values ('AlexElCapo','1111',4), ('JuanMakia','0000',4), ('72471422','0000',2), ('52849421','0000',2), ('68470826','0000',2), ('98374971','0000',2), ('41683731','0000',2), ('811192822-A','veterinaria',3), ('811192822-B','veterinaria',3), ('811192822-C','veterinaria',3), ('811192822-D','veterinaria',3), ('Alf','4321',1)
+
+*/
