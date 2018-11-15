@@ -115,8 +115,6 @@ values
 ('3137506273','Calle 100#52-32','8236611','','9907162019',1),
 ('3146748971','Calle 4#98-26','82314887','','9907162019',3);
 
-
-
 -- drop table postulacion;
 create table seguimiento
 (codigo_seguimiento int(30) auto_increment primary key,
@@ -310,9 +308,8 @@ delete from login_usuarios where nombre_usuario=us;
 
 /* ADOPCIONES */
 
-Create procedure VetInsertar_Adopcion(cdan int(30), cods int(30),men varchar(100))
-insert into Adopcion (cod_ani,cod_seg,mensaje) values(cdan,cods,men);
-call VetInsertar_Adopcion (3,7,'verifique su correo');
+Create procedure VetInsertar_Adopcion(cod int(30), cdan int(30), cods int(30))
+insert into Adopcion values(codigo_adopcion, codigo_ani, codigo_seg);
 
 Create procedure VetModificar_Adopcion( cod int(30), cdan int(30), cods int(30),mens varchar(100))
 Update Adopcion set cod_ani=cdan, cod_seg=cods, mensaje=mens where codigo_adopcion=cod;
@@ -445,9 +442,8 @@ delete from postulacion where codigo_postulacion=codpost;
 /*SEGUIMIENTO*/
 
 /*Insertar Seguimiento*/
-Create procedure FunInsertar_Seguimiento(cdp int(30))
+Create procedure FunInsertar_Seguimiento(cod int(30), cdp int(30))
 insert into seguimiento (cod_postula) values(cdp);
-call FunInsertar_Seguimiento (6);
 
 /*Modificar Seguimiento*/
 Create procedure FunModificar_Seguimiento( cod int(30), cdp int(30))
@@ -492,6 +488,14 @@ insert into ciudadano(usurio_ciu) values (nom);
 
 create procedure inser_us_vet(nit varchar(50),rol int(30))
 insert into veterinaria (nit_veterinaria,rol2) values(nit,rol);
+
+
+/*Modificar Usuarios*/
+create procedure mod_usu(us varchar(50),cla varchar(50))
+update login_usuarios set clave=cla where nombre_usuario=us;
+
+-- drop procedure mod_usu_vet
+
 /*
 
 -- CONSULTA 1
