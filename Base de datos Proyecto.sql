@@ -460,8 +460,8 @@ create procedure inser_veter_Admin(nit varchar(30),tel varchar(30),nombre varcha
 insert into veterinaria (nit_veterinaria,telefono_veterinaria,nombre_veterinaria,direccion_veterinaria,clave,rol2) values(nit,tel,nombre,dir,clave,rol);
 
 /*Modificar Veterinaria*/
-create procedure act_veter_Admin(nit varchar(30),tel varchar(30),nombre varchar(50),dir varchar(50),cla varchar(50))
-update veterinaria set telefono_veterinaria=tel,nombre_veterinaria=nombre,direccion_veterinaria=dir,clave=cla where nit_veterinaria=nit;
+create procedure act_veter_Admin(nit varchar(30),tel varchar(30),nombre varchar(50),dir varchar(50))
+update veterinaria set telefono_veterinaria=tel,nombre_veterinaria=nombre,direccion_veterinaria=dir where nit_veterinaria=nit;
 
 /*Eliminar Veterinaria*/
 create procedure bor_veter_Admin(nit varchar(30))
