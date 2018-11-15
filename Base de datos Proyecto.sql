@@ -475,7 +475,6 @@ delete from veterinaria where nit_veterinaria=nit;
 /*Insertar  USUARIO Veterinaria*/
 create procedure inser_usu_vet(us varchar(50),cla varchar(50),rol int(30))
 insert into login_usuarios (nombre_usuario,clave,rol_login) values(us,cla,rol);
-
 /*USUARIO FUNCIONARIO*/
 /*Insertar  USUARIO FUNCIONARIO*/
 create procedure inser_usu_func(ced varchar(50),cla varchar(50),rol int(30))
