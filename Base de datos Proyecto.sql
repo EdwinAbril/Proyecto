@@ -62,9 +62,6 @@ alter table animal add foto varchar(255);
 alter table animal add tamaño varchar(30);
 alter table animal add genero varchar(30);
 alter table animal add color varchar(30);
-
-
-
 insert into animal(nombre_animal,tipo_animal,edad_animal,raza_animal)
 values
 ('Terry','Perro','3','Beagle'),
@@ -77,6 +74,32 @@ values
 ('Mia','Gato','3','Bengala'),
 ('Kira','Gato','1','Siames'),
 ('Tom','Gato','1','Burmes');
+
+create table adoptados(
+codigo_adoptado int(30) auto_increment primary key,
+nombre_animal varchar (50) not null,
+tipo_animal varchar (50) not null,
+edad_animal varchar(5) not null,
+raza_animal varchar(30) not null
+);
+alter table adoptados add foto varchar(255);
+alter table adoptados add tamaño varchar(30);
+alter table adoptados add genero varchar(30);
+alter table adoptados add color varchar(30);
+
+insert into adoptados(nombre_animal,tipo_animal,edad_animal,raza_animal)
+values
+('Terry','Perro','3','Beagle'),
+('Joel','Perro','1','Doberman'),
+('Paco','Perro','2','Boxer'),
+('Roger','Perro','4','Gran Danes'),
+('Bob','Perro','5','Akita'),
+('Charly','Perro','3','Beagle'),
+('Lola','Gato','2','Persa'),
+('Mia','Gato','3','Bengala'),
+('Kira','Gato','1','Siames'),
+('Tom','Gato','1','Burmes');
+
 
 create table jornada
 (codigo_jornada int (30) auto_increment primary key ,
@@ -196,16 +219,13 @@ values
 
 create table adopcion
 (codigo_adopcion int (30) primary key auto_increment,
-cod_ani int (30) not null,
-cod_seg int (30) not null,
-constraint seg foreign key (cod_seg) references seguimiento (codigo_seguimiento) on delete cascade on update cascade,
-constraint ani foreign key (cod_ani) references animal (codigo_animal) on delete cascade on update cascade);
+cod_ani int (30) not null);
 alter table adopcion add mensaje varchar(100);
-
-insert into adopcion(cod_ani,cod_seg)
+alter table adopcion add constraint  cadop foreign key (cod_ani) references adoptados (codigo_adoptado) on delete cascade on update cascade;
+insert into adopcion(cod_ani,mensaje)
 values
-(1,1),
-(2,2);
+(1,'asda'),
+(2,'asdasd');
 
 create table denuncia
 (codigo_denuncia int (30) auto_increment primary key,
@@ -308,8 +328,9 @@ delete from login_usuarios where nombre_usuario=us;
 
 /* ADOPCIONES */
 
-Create procedure VetInsertar_Adopcion(cod int(30), cdan int(30), cods int(30))
-insert into Adopcion values(codigo_adopcion, codigo_ani, codigo_seg);
+Create procedure VetInsertar_Adopcion(can int(30),  men varchar(100))
+insert into Adopcion  (cod_ani,mensaje) values(can, cse, men);
+
 
 Create procedure VetModificar_Adopcion( cod int(30), cdan int(30), cods int(30),mens varchar(100))
 Update Adopcion set cod_ani=cdan, cod_seg=cods, mensaje=mens where codigo_adopcion=cod;
@@ -323,6 +344,9 @@ Delete from Adopcion where codigo_adopcion=cod;
 create procedure inser_animal_Admin(nombre varchar(50),tipo varchar(50),edad varchar(5),raza varchar(30),imagen varchar(255),tama varchar(30),gen varchar(30),col varchar(30))
 insert into animal (nombre_animal,tipo_animal,edad_animal,raza_animal,foto,tamaño,genero,color) values (nombre,tipo,edad,raza,imagen,tama,gen,col);
 -- drop procedure inser_animal_Admin;
+
+create procedure inser_adoptado_Admin(nombre varchar(50),tipo varchar(50),edad varchar(5),raza varchar(30),imagen varchar(255),tama varchar(30),gen varchar(30),col varchar(30))
+insert into adoptados (nombre_animal,tipo_animal,edad_animal,raza_animal,foto,tamaño,genero,color) values (nombre,tipo,edad,raza,imagen,tama,gen,col);
 
 /*Modificar Animal*/
 create procedure act_animal_Admin(codigo int(30),nombre varchar(50), tipo varchar(50),edad varchar(5),raza varchar(30),tama varchar(30),gene varchar(30), colo varchar(30))
@@ -401,9 +425,9 @@ Delete from jornada where codigo_jornada=codi;
 create procedure Insertar_Funcionario(cedula varchar(30),telefono varchar(30),nombre varchar(50),correo varchar(100),rol int(30))
 insert into funcionario  (cedula_funcionario,telefono_funcionario,nombre_funcionario,correo_funcionario,rol3)values(cedula,telefono,nombre,correo,rol);
 /*Modificar Funcionario*/
-Create procedure Modificar_Funcionario( ced varchar(30), tel varchar(30), nom varchar(50), cor varchar(100), cla varchar(100))
-Update Funcionario set telefono_funcionario=tel, nombre_funcionario=nom, correo_funcionario=cor, clave=cla where cedula_funcionario=ced; 
-
+Create procedure Modificar_Funcionario( ced varchar(30), tel varchar(30), nom varchar(50), cor varchar(100))
+Update Funcionario set telefono_funcionario=tel, nombre_funcionario=nom, correo_funcionario=cor where cedula_funcionario=ced; 
+-- drop procedure Modificar_Funcionario;
 /*Eliminar Funcionario*/
 Create procedure Eliminar_Funcionario( cedu varchar(30))
 Delete from funcionario where cedula_funcionario=cedu;
