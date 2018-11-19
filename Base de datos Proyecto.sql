@@ -329,8 +329,7 @@ delete from login_usuarios where nombre_usuario=us;
 /* ADOPCIONES */
 
 Create procedure VetInsertar_Adopcion(can int(30),  men varchar(100))
-insert into Adopcion  (cod_ani,mensaje) values(can, cse, men);
-
+insert into Adopcion  (cod_ani,mensaje) values(can, men);
 
 Create procedure VetModificar_Adopcion( cod int(30), cdan int(30), cods int(30),mens varchar(100))
 Update Adopcion set cod_ani=cdan, cod_seg=cods, mensaje=mens where codigo_adopcion=cod;
@@ -466,7 +465,7 @@ delete from postulacion where codigo_postulacion=codpost;
 /*SEGUIMIENTO*/
 
 /*Insertar Seguimiento*/
-Create procedure FunInsertar_Seguimiento(cod int(30), cdp int(30))
+Create procedure FunInsertar_Seguimiento( cdp int(30))
 insert into seguimiento (cod_postula) values(cdp);
 
 /*Modificar Seguimiento*/
