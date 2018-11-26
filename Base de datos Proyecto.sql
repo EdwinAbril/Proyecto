@@ -132,23 +132,30 @@ certificado_laboral varchar(255),
 cedu varchar (50),
 constraint ciu foreign key (cedu) references ciudadano (cedula) on delete cascade on update cascade);
 alter table postulacion add codigo_animal int(30);
-alter table postulacion add constraint  ca foreign key (codigo_animal) references animal (codigo_animal) on delete cascade on update cascade;
+alter table postulacion add constraint omaiba foreign key (codigo_animal) references animal (codigo_animal) on delete cascade on update cascade;
 insert into postulacion(telefono_contacto,direccion_contacto,telefono_fijo,certificado_laboral,cedu,codigo_animal)
 values 
 ('3137506273','Calle 100#52-32','8236611','','9907162019',1),
-('3146748971','Calle 4#98-26','82314887','','9907162019',3);
+('3146748971','Calle 4#98-26','82314887','','9907162019',2);
 
 -- drop table postulacion;
-create table seguimiento
-(codigo_seguimiento int(30) auto_increment primary key,
-cod_postula int(30),
-constraint postul foreign key (cod_postula) references postulacion (codigo_postulacion) on delete cascade on update cascade
-);
 
-insert into seguimiento(cod_postula)
-values
-(1),
-(2);
+create table seguimiento
+(codigo_seguimiento int (30) auto_increment primary key,
+postulacion int (30),
+telefono_contacto varchar (20),
+direccion_contacto varchar (20),
+telefono_fijo varchar (20),
+certificado_laboral varchar(255),
+cedu varchar (50),
+animal int(30));
+alter table seguimiento add constraint naur foreign key (animal) references animal (codigo_animal) on delete cascade on update cascade;
+alter table seguimiento add constraint pos foreign key(postulacion) references postulacion (codigo_postulacion) on delete cascade on update cascade;
+alter table seguimiento add constraint ciuxp foreign key (cedu) references ciudadano (cedula) on delete cascade on update cascade;
+
+-- drop table seguimiento;
+
+
 
 create table veterinaria (
 nit_veterinaria varchar(50) primary key,
@@ -219,13 +226,13 @@ values
 
 create table adopcion
 (codigo_adopcion int (30) primary key auto_increment,
-cod_ani int (30) not null);
+nombre_ani varchar(50),
+cedula varchar(50));
 alter table adopcion add mensaje varchar(100);
-alter table adopcion add constraint  cadop foreign key (cod_ani) references adoptados (codigo_adoptado) on delete cascade on update cascade;
-insert into adopcion(cod_ani,mensaje)
+insert into adopcion(nombre_ani,cedula,mensaje)
 values
-(1,'asda'),
-(2,'asdasd');
+('','','asda'),
+('','','asdasd');
 
 create table denuncia
 (codigo_denuncia int (30) auto_increment primary key,
@@ -305,6 +312,14 @@ values('811192822-A','1111',3),
 ('811192822-B','0000',3);
 
 
+create table respuestapositiva
+(cedula varchar(50)primary key,
+mensaje varchar(200)
+);
+
+create table respuestanegativa(
+cedula varchar(50) primary key,
+mensaje varchar(200));
 -- drop table usuarios;
 
 
@@ -465,8 +480,10 @@ delete from postulacion where codigo_postulacion=codpost;
 /*SEGUIMIENTO*/
 
 /*Insertar Seguimiento*/
-Create procedure FunInsertar_Seguimiento( cdp int(30))
-insert into seguimiento (cod_postula) values(cdp);
+
+Create procedure FunInsertar_Seguimiento(cp  int(30),tel varchar(20),dir varchar(20),fij varchar(20),cert varchar(255),ced varchar(50),ani int(30))
+insert into seguimiento (postulacion,telefono_contacto,direccion_contacto,telefono_fijo,certificado_laboral,cedu,animal) values(cp,tel,dir,fij,cert,ced,ani);
+
 
 /*Modificar Seguimiento*/
 Create procedure FunModificar_Seguimiento( cod int(30), cdp int(30))
@@ -515,11 +532,7 @@ insert into veterinaria (nit_veterinaria,rol2) values(nit,rol);
 
 /*Modificar Usuarios*/
 create procedure mod_usu(us varchar(50),cla varchar(50))
-update login_usuarios set clave=cla where nombre_usuario=us;
-
--- drop procedure mod_usu_vet
-
-/*
+update login_usuarios set clave=cla where nombre_usuario=us;/*
 
 -- CONSULTA 1
 select nombre,cedula,correo,nombre_mascota,raza_mascota from ciudadano
