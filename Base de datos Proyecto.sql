@@ -146,7 +146,6 @@ postulacion int (30),
 telefono_contacto varchar (20),
 direccion_contacto varchar (20),
 telefono_fijo varchar (20),
-certificado_laboral varchar(255),
 cedu varchar (50),
 animal int(30));
 alter table seguimiento add constraint naur foreign key (animal) references animal (codigo_animal) on delete cascade on update cascade;
@@ -479,10 +478,10 @@ delete from postulacion where codigo_postulacion=codpost;
 
 /*Insertar Seguimiento*/
 
-Create procedure FunInsertar_Seguimiento(cp  int(30),tel varchar(20),dir varchar(20),fij varchar(20),cert varchar(255),ced varchar(50),ani int(30))
-insert into seguimiento (postulacion,telefono_contacto,direccion_contacto,telefono_fijo,certificado_laboral,cedu,animal) values(cp,tel,dir,fij,cert,ced,ani);
+Create procedure FunInsertar_Seguimiento(cp  int(30),tel varchar(20),dir varchar(20),fij varchar(20),ced varchar(50),ani int(30))
+insert into seguimiento (postulacion,telefono_contacto,direccion_contacto,telefono_fijo,cedu,animal) values(cp,tel,dir,fij,ced,ani);
 
-call FunInsertar_Seguimiento (2,'123','aqui','123','',1001263254,2);
+-- drop procedure FunInsertar_Seguimiento;
 
 
 /*Modificar Seguimiento*/
