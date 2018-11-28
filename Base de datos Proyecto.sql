@@ -312,14 +312,12 @@ values('811192822-A','1111',3),
 ('811192822-B','0000',3);
 
 
-create table respuestapositiva
+create table respuestausuario
 (cedula varchar(50)primary key,
 mensaje varchar(200)
 );
 
-create table respuestanegativa(
-cedula varchar(50) primary key,
-mensaje varchar(200));
+
 -- drop table usuarios;
 
 
@@ -483,6 +481,8 @@ delete from postulacion where codigo_postulacion=codpost;
 
 Create procedure FunInsertar_Seguimiento(cp  int(30),tel varchar(20),dir varchar(20),fij varchar(20),cert varchar(255),ced varchar(50),ani int(30))
 insert into seguimiento (postulacion,telefono_contacto,direccion_contacto,telefono_fijo,certificado_laboral,cedu,animal) values(cp,tel,dir,fij,cert,ced,ani);
+
+call FunInsertar_Seguimiento (2,'123','aqui','123','',1001263254,2);
 
 
 /*Modificar Seguimiento*/
