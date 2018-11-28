@@ -312,14 +312,21 @@ values('811192822-A','1111',3),
 
 
 create table respuestausuario
-(cedula varchar(50)primary key,
-mensaje varchar(200)
+(codigo_positivo int(30) Auto_Increment primary key,
+cedula_respuesta varchar(50),
+mensaje varchar(200),
+constraint cere foreign key(cedula_respuesta) references ciudadano(cedula) on delete cascade on update cascade
 );
 
 
 -- drop table usuarios;
+/*Respuesta positiva*/
+create procedure inser_respuesta_positiva(cedu varchar(50),mensa varchar(200))
+insert into respuestausuario (cedula_respuesta,mensaje) values(cedu,mensa);
+call inser_respuesta_positiva('1073523672','esto es funcional');
 
 
+-- drop procedure inser_respuesta_positiva;
 /*ADMINISTRADOR*/
 /*Insertar Administrador*/
 create procedure inser_admin_Admin(us varchar(50),cla varchar(50),rol int(30))
