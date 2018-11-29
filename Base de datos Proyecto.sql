@@ -326,14 +326,12 @@ constraint cere foreign key(cedula_respuesta) references ciudadano(cedula) on de
 create procedure inser_respuesta_positiva(cedu varchar(50),mensa varchar(200))
 insert into respuestausuario (cedula_respuesta,mensaje) values(cedu,mensa);
 
-call inser_respuesta_positiva('9907162019','Si Señor');
 
 -- drop procedure inser_respuesta_positiva;
 /*ADMINISTRADOR*/
 /*Insertar Administrador*/
 create procedure inser_admin_Admin(us varchar(50),cla varchar(50),rol int(30))
 insert into login_usuarios (nombre_usuario,clave,rol_login)values(us,cla,rol);
-call inser_admin_Admin('lol','123',1);
 
 /*Modificar Administrador*/
 create procedure act_admin_Admin(us varchar(50),cla varchar(50))
@@ -458,8 +456,6 @@ Delete from funcionario where cedula_funcionario=cedu;
 /*Insertar Mascota*/
 create procedure usuario_mascota_inser(nom_mas varchar(30), tipo varchar(50), edad varchar(5), raza varchar(30), fot varchar(255), tam varchar(30),gen varchar(30),col varchar(30) ,cedu varchar(20))
 insert into mascota (nombre_mascota,tipo_mascota,edad_mascota,raza_mascota,foto,tamaño,genero,color,ced) values (nom_mas,tipo,edad,raza,fot,tam,gen,col,cedu) ;
-
-call usuario_mascota_inser('Doncan','Perro','2años','Bulldog','','Grande','Macho','Cafe claro','1073523672');
 -- drop procedure usuario_mascota_inser;
 /*Modificar Mascota*/
 create procedure usuario_mascota_actu(cod_mas int(30), nom_mas varchar(30), descen varchar(30), esta_mas varchar(45), tip_mas varchar(20), edad_mas varchar(20), raza_mas varchar(20), cedu varchar(20))
