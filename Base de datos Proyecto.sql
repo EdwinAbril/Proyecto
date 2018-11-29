@@ -197,20 +197,23 @@ values
 
 create table mascota
 (codigo_mascota int (30) auto_increment primary key ,
-nombre_mascota varchar(30),
-descendencia varchar (30),
-estado_mascota varchar(45),
-tipo_mascota varchar(20) not null,
-edad_mascota varchar(20),
-raza_mascota varchar (20),
+nombre_mascota varchar(50),
+tipo_mascota varchar (50),
+edad_mascota varchar(5),
+raza_mascota varchar(30),
+foto varchar(255),
+tamaño varchar(30),
+genero varchar(30),
+color varchar(30),
 ced varchar (20),
 constraint ciuda foreign key (ced) references ciudadano (cedula) on delete cascade on update cascade);
-alter table mascota add foto varchar(250);
 
-insert into mascota(nombre_mascota,descendencia,estado_mascota,tipo_mascota,edad_mascota,raza_mascota,ced)
+
+insert into mascota(nombre_mascota,tipo_mascota,edad_mascota,raza_mascota,foto,tamaño,genero,color,ced)
 values
-('poppy','cruce pitbull-doberman','enfermo','perro','5','pitbull','9907162019'),
-('garen','puro','Sano','gato','2','persa','1001263254');
+('poppy','perro','2','pitbull','','grande','Hembra','Blanco','9907162019'),
+('garen','gato','3','Persa','','pequeño','Macho','Negro','1001263254');
+
 
 create table asiste
 (cod_mascota int (30) primary key auto_increment,
@@ -315,16 +318,15 @@ create table respuestausuario
 (codigo_positivo int(30) Auto_Increment primary key,
 cedula_respuesta varchar(50),
 mensaje varchar(200),
-constraint cere foreign key(cedula_respuesta) references ciudadano(cedula) on delete cascade on update cascade
-);
+constraint cere foreign key(cedula_respuesta) references ciudadano(cedula) on delete cascade on update cascade);
 
 
 -- drop table usuarios;
 /*Respuesta positiva*/
 create procedure inser_respuesta_positiva(cedu varchar(50),mensa varchar(200))
 insert into respuestausuario (cedula_respuesta,mensaje) values(cedu,mensa);
-call inser_respuesta_positiva('1073523672','esto es funcional');
 
+call inser_respuesta_positiva('9907162019','Si Señor');
 
 -- drop procedure inser_respuesta_positiva;
 /*ADMINISTRADOR*/
@@ -454,9 +456,11 @@ Delete from funcionario where cedula_funcionario=cedu;
 /*MASCOTA*/
 
 /*Insertar Mascota*/
-create procedure usuario_mascota_inser(nom_mas varchar(30), descen varchar(30), esta_mas varchar(45), tip_mas varchar(20), edad_mas varchar(20), raza_mas varchar(20), cedu varchar(20),fot varchar(250))
-insert into mascota (nombre_mascota,descendencia,estado_mascota,tipo_mascota,edad_mascota,raza_mascota,ced,foto) values (nom_mas, descen, esta_mas, tip_mas, edad_mas, raza_mas, cedu,fot) ;
+create procedure usuario_mascota_inser(nom_mas varchar(30), tipo varchar(50), edad varchar(5), raza varchar(30), fot varchar(255), tam varchar(30),gen varchar(30),col varchar(30) ,cedu varchar(20))
+insert into mascota (nombre_mascota,tipo_mascota,edad_mascota,raza_mascota,foto,tamaño,genero,color,ced) values (nom_mas,tipo,edad,raza,fot,tam,gen,col,cedu) ;
 
+call usuario_mascota_inser('Doncan','Perro','2años','Bulldog','','Grande','Macho','Cafe claro','1073523672');
+-- drop procedure usuario_mascota_inser;
 /*Modificar Mascota*/
 create procedure usuario_mascota_actu(cod_mas int(30), nom_mas varchar(30), descen varchar(30), esta_mas varchar(45), tip_mas varchar(20), edad_mas varchar(20), raza_mas varchar(20), cedu varchar(20))
 update mascota set nombre_mascota=nom_mas, descendencia=descen, estado_mascota=esta_mas, tipo_mascota=tip_mas, edad_mascota=edad_mas, raza_mascota=raza_mas where ced=cedu and codigo_mascota=cod_mas;
