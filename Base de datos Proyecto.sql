@@ -228,13 +228,14 @@ values
 
 create table adopcion
 (codigo_adopcion int (30) primary key auto_increment,
-nombre_ani varchar(50),
-cedula varchar(50));
+animal int(30),
+cedula varchar(50),
+constraint animali foreign key(animal) references adoptados(codigo_adoptado));
 alter table adopcion add mensaje varchar(100);
-insert into adopcion(nombre_ani,cedula,mensaje)
+insert into adopcion(animal,cedula,mensaje)
 values
-('','','asda'),
-('','','asdasd');
+('1','','asda'),
+('2','','asdasd');
 
 create table denuncia
 (codigo_denuncia int (30) auto_increment primary key,
@@ -349,8 +350,10 @@ delete from login_usuarios where nombre_usuario=us;
 
 /* ADOPCIONES */
 
-Create procedure VetInsertar_Adopcion(can int(30),  men varchar(100))
-insert into Adopcion  (cod_ani,mensaje) values(can, men);
+Create procedure VetInsertar_Adopcion(ani int(30),cedu varchar(50),mens varchar(100))
+insert into Adopcion (animal,cedula,mensaje) values(ani,cedu,mens);
+
+call VetInsertar_Adopcion(10,'1073523672','si sirve el procedure');
 
 Create procedure VetModificar_Adopcion( cod int(30), cdan int(30), cods int(30),mens varchar(100))
 Update Adopcion set cod_ani=cdan, cod_seg=cods, mensaje=mens where codigo_adopcion=cod;
@@ -459,7 +462,7 @@ Delete from funcionario where cedula_funcionario=cedu;
 create procedure usuario_mascota_inser(nom_mas varchar(30), tipo varchar(50), edad varchar(5), raza varchar(30), fot varchar(255), tam varchar(30),gen varchar(30),col varchar(30) ,cedu varchar(20))
 insert into mascota (nombre_mascota,tipo_mascota,edad_mascota,raza_mascota,foto,tamaño,genero,color,ced) values (nom_mas,tipo,edad,raza,fot,tam,gen,col,cedu) ;
 
-call usuario_mascota_inser('Doncan','Perro','2años','Bulldog','','Grande','Macho','Cafe claro','1073523672');
+
 -- drop procedure usuario_mascota_inser;
 /*Modificar Mascota*/
 create procedure usuario_mascota_actu(cod_mas int(30), nom_mas varchar(30), descen varchar(30), esta_mas varchar(45), tip_mas varchar(20), edad_mas varchar(20), raza_mas varchar(20), cedu varchar(20))
