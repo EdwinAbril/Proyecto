@@ -17,6 +17,7 @@ clave varchar(50) not null,
 rol_login int(30), 
 constraint ro0 foreign key (rol_login) references roles(rol) on delete cascade on update cascade
 );
+alter table login_usuarios add foto varchar(255);
 
 insert into login_usuarios(nombre_usuario,clave,rol_login)
 values('AlexElCapo','1111',4),
@@ -327,18 +328,16 @@ constraint cere foreign key(cedula_respuesta) references ciudadano(cedula) on de
 create procedure inser_respuesta_positiva(cedu varchar(50),mensa varchar(200))
 insert into respuestausuario (cedula_respuesta,mensaje) values(cedu,mensa);
 
-call inser_respuesta_positiva('9907162019','Si Señor');
 
 -- drop procedure inser_respuesta_positiva;
 /*ADMINISTRADOR*/
 /*Insertar Administrador*/
-create procedure inser_admin_Admin(us varchar(50),cla varchar(50),rol int(30))
-insert into login_usuarios (nombre_usuario,clave,rol_login)values(us,cla,rol);
-call inser_admin_Admin('lol','123',1);
+create procedure inser_admin_Admin(us varchar(50),cla varchar(50),rol int(30),fot varchar(255))
+insert into login_usuarios (nombre_usuario,clave,rol_login,foto)values(us,cla,rol,fot);
 
 /*Modificar Administrador*/
-create procedure act_admin_Admin(us varchar(50),cla varchar(50))
-update login_usuarios set clave=cla where nombre_usuario=us;
+create procedure act_admin_Admin(us varchar(50),cla varchar(50),fot varchar(255))
+update login_usuarios set clave=cla,foto=fot where nombre_usuario=us;
 
 -- drop procedure act_admin_Admin;
 /*Eliminar Administrador*/
@@ -372,8 +371,12 @@ create procedure inser_adoptado_Admin(nombre varchar(50),tipo varchar(50),edad v
 insert into adoptados (nombre_animal,tipo_animal,edad_animal,raza_animal,foto,tamaño,genero,color) values (nombre,tipo,edad,raza,imagen,tama,gen,col);
 
 /*Modificar Animal*/
-create procedure act_animal_Admin(codigo int(30),nombre varchar(50), tipo varchar(50),edad varchar(5),raza varchar(30),tama varchar(30),gene varchar(30), colo varchar(30))
-update animal set nombre_animal=nombre,tipo_animal=tipo,edad_animal=edad,raza_animal=raza, tamaño=tama, genero=gene, color=colo where codigo_animal=codigo;
+create procedure act_animal_Admin(codigo int(30),nombre varchar(50),tipo varchar(50),edad varchar(5),raza varchar(30),imagen varchar(255),tama varchar(30),gen varchar(30),col varchar(30))
+update animal set nombre_animal=nombre,tipo_animal=tipo,edad_animal=edad,raza_animal=raza, foto=imagen, tamaño=tama, genero=gen, color=col where codigo_animal=codigo;
+
+create procedure act_adoptado_Admin(codigo int(30),nombre varchar(50),tipo varchar(50),edad varchar(5),raza varchar(30),imagen varchar(255),tama varchar(30),gen varchar(30),col varchar(30))
+update adoptados set nombre_animal=nombre,tipo_animal=tipo,edad_animal=edad,raza_animal=raza, foto=imagen, tamaño=tama, genero=gen, color=col where codigo_adoptado=codigo;
+
 
 -- drop procedure act_animal_Admin;
 
@@ -463,10 +466,13 @@ create procedure usuario_mascota_inser(nom_mas varchar(30), tipo varchar(50), ed
 insert into mascota (nombre_mascota,tipo_mascota,edad_mascota,raza_mascota,foto,tamaño,genero,color,ced) values (nom_mas,tipo,edad,raza,fot,tam,gen,col,cedu) ;
 
 
+
 -- drop procedure usuario_mascota_inser;
 /*Modificar Mascota*/
-create procedure usuario_mascota_actu(cod_mas int(30), nom_mas varchar(30), descen varchar(30), esta_mas varchar(45), tip_mas varchar(20), edad_mas varchar(20), raza_mas varchar(20), cedu varchar(20))
-update mascota set nombre_mascota=nom_mas, descendencia=descen, estado_mascota=esta_mas, tipo_mascota=tip_mas, edad_mascota=edad_mas, raza_mascota=raza_mas where ced=cedu and codigo_mascota=cod_mas;
+create procedure usuario_mascota_actu
+(cod_mas int(30), nom_mas varchar(30), tipo varchar(50), edad varchar(5), raza varchar(30),fot varchar(255), tam varchar(30),gen varchar(30),col varchar(30) ,cedu varchar(20))
+update mascota set nombre_mascota=nom_mas, tipo_mascota=tipo, edad_mascota=edad, raza_mascota=raza, foto=fot, tamaño=tam, genero=gen, color=col where ced=cedu and codigo_mascota=cod_mas;
+-- drop procedure usuario_mascota_actu;
 
 /*Eliminar Mascota*/
 create procedure usuario_mascota_elim(cod varchar(20))
