@@ -352,7 +352,7 @@ delete from login_usuarios where nombre_usuario=us;
 Create procedure VetInsertar_Adopcion(ani int(30),cedu varchar(50),mens varchar(100))
 insert into Adopcion (animal,cedula,mensaje) values(ani,cedu,mens);
 
-call VetInsertar_Adopcion(10,'1073523672','si sirve el procedure');
+
 
 Create procedure VetModificar_Adopcion( cod int(30), cdan int(30), cods int(30),mens varchar(100))
 Update Adopcion set cod_ani=cdan, cod_seg=cods, mensaje=mens where codigo_adopcion=cod;
@@ -465,7 +465,9 @@ Delete from funcionario where cedula_funcionario=cedu;
 create procedure usuario_mascota_inser(nom_mas varchar(30), tipo varchar(50), edad varchar(5), raza varchar(30), fot varchar(255), tam varchar(30),gen varchar(30),col varchar(30) ,cedu varchar(20))
 insert into mascota (nombre_mascota,tipo_mascota,edad_mascota,raza_mascota,foto,tamaño,genero,color,ced) values (nom_mas,tipo,edad,raza,fot,tam,gen,col,cedu) ;
 
-
+/*Insertar mascota adoptada*/
+create procedure usuario_mascota_adop(nom_mas varchar(30), tipo varchar(50), edad varchar(5), raza varchar(30),tam varchar(30),gen varchar(30),col varchar(30) ,cedu varchar(20))
+insert into mascota (nombre_mascota,tipo_mascota,edad_mascota,raza_mascota,tamaño,genero,color,ced) values (nom_mas,tipo,edad,raza,tam,gen,col,cedu) ;
 
 -- drop procedure usuario_mascota_inser;
 /*Modificar Mascota*/
