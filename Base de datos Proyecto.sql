@@ -63,6 +63,7 @@ alter table animal add foto varchar(255);
 alter table animal add tamaño varchar(30);
 alter table animal add genero varchar(30);
 alter table animal add color varchar(30);
+
 insert into animal(nombre_animal,tipo_animal,edad_animal,raza_animal)
 values
 ('Terry','Perro','3','Beagle'),
@@ -106,9 +107,11 @@ create table jornada
 (codigo_jornada int (30) auto_increment primary key ,
 fecha date,
 lugar varchar(45),
-duracion text);
+duracion varchar(20));
 
 alter table jornada add descripcion varchar(255);
+
+-- drop table jornada;
 
 insert into jornada(fecha,lugar,duracion)
 values
@@ -162,39 +165,36 @@ nit_veterinaria varchar(50) primary key,
 telefono_veterinaria varchar(30) not null,
 nombre_veterinaria varchar(50) not null,
 direccion_veterinaria varchar(50) not null,
-rol2 int(30),	
-constraint ro2 foreign key (rol2) references roles(rol) on delete cascade on update cascade,
 constraint nit foreign key (nit_veterinaria) references login_usuarios(nombre_usuario) on delete cascade on update cascade
 );
 
 -- drop table veterinaria;
 
-insert into veterinaria(nit_veterinaria,telefono_veterinaria,nombre_veterinaria,direccion_veterinaria,rol2)
+insert into veterinaria(nit_veterinaria,telefono_veterinaria,nombre_veterinaria,direccion_veterinaria)
 values 
-('811192822-A','3137425832','Mis patitas','Calle 14#32-45',3),
-('811192822-B','3142315647','Mis huellitas','Calle 13#05-45',3),
-('811192822-C','3153216798','Mis mascotas','Calle 23#34-25',3),
-('811192822-D','3113216547','Guau y miau','Calle 11#13-22',3);
+('811192822-A','3137425832','Mis patitas','Calle 14#32-45'),
+('811192822-B','3142315647','Mis huellitas','Calle 13#05-45'),
+('811192822-C','3153216798','Mis mascotas','Calle 23#34-25'),
+('811192822-D','3113216547','Guau y miau','Calle 11#13-22');
 
 create table funcionario (
 cedula_funcionario varchar(50) primary key,
 telefono_funcionario varchar(30) not null,
 nombre_funcionario varchar (50) not null,
 correo_funcionario varchar (100) not null,
-rol3 int(30),
-constraint ro3 foreign key (rol3) references roles(rol) on delete cascade on update cascade,
 constraint ced foreign key (cedula_funcionario) references login_usuarios(nombre_usuario) on delete cascade on update cascade
 );
 
 -- drop table funcionario;
 
-insert into funcionario(cedula_funcionario,telefono_funcionario,nombre_funcionario,correo_funcionario,rol3)
+insert into funcionario(cedula_funcionario,telefono_funcionario,nombre_funcionario,correo_funcionario)
 values
-('72471422','3216440371','Manuel','manuelito@gmail.com',2),
-('52849421','3135487561','Lucas','luquitas@gmail.com',2),
-('68470826','3116548712','Juan','juansito@gmail.com',2),
-('98374971','3135487654','Ivan','ivansito@gmail.com',2),
-('41683731','3106547875','Sergio','sergiofon@gmail.com',2);
+('72471422','3216440371','Manuel','manuelito@gmail.com'),
+('52849421','3135487561','Lucas','luquitas@gmail.com'),
+('68470826','3116548712','Juan','juansito@gmail.com'),
+('98374971','3135487654','Ivan','ivansito@gmail.com'),
+('41683731','3106547875','Sergio','sergiofon@gmail.com');
+
 
 create table mascota
 (codigo_mascota int (30) auto_increment primary key ,
@@ -226,6 +226,8 @@ insert into asiste()
 values
 (),
 ();
+
+-- drop table asiste;
 
 create table adopcion
 (codigo_adopcion int (30) primary key auto_increment,
@@ -336,7 +338,7 @@ create procedure inser_admin_Admin(us varchar(50),cla varchar(50),rol int(30),fo
 insert into login_usuarios (nombre_usuario,clave,rol_login,foto)values(us,cla,rol,fot);
 
 /*Modificar Administrador*/
-create procedure act_admin_Admin(us varchar(50),cla varchar(50),fot varchar(255))
+create procedure login_usuariosact_admin_Admin(us varchar(50),cla varchar(50),fot varchar(255))
 update login_usuarios set clave=cla,foto=fot where nombre_usuario=us;
 
 -- drop procedure act_admin_Admin;
@@ -431,12 +433,12 @@ Delete from Denuncia where codigo_denuncia=cod;
 /*EVENTOS (JORNADAS)*/
 
 /*Insertar Eventos*/
-Create procedure FunInsertar_Eventos(fec date, lug varchar(45), dur text,des varchar(255))
+Create procedure FunInsertar_Eventos(fec date, lug varchar(45), dur varchar(20),des varchar(255))
 insert into Jornada (fecha, lugar, duracion,descripcion) values(fec,lug,dur,des) ;
 
 
 /*Modificar Eventos*/
-Create procedure FunModificar_Eventos( cod int(30), fec date, lug varchar(45), dur time, des varchar(255))
+Create procedure FunModificar_Eventos( cod int(30), fec date, lug varchar(45), dur varchar(20), des varchar(255))
 Update jornada set fecha=fec, lugar=lug, duracion=dur, descripcion=des where codigo_jornada=cod; 
 -- drop procedure FunModificar_Eventos;
 
