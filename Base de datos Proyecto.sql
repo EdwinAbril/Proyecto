@@ -481,8 +481,9 @@ delete from mascota where codigo_mascota=cod;
 /*POSTULACION*/
 
 /*Insertar Postulacion*/
-create procedure usuario_postulacion_inser(tel_con varchar(20), dir_con varchar(20), tel_fij varchar(20), cer_lab varchar(255), cedu varchar(20),con_ani int(30))
-insert into postulacion (telefono_contacto,direccion_contacto,telefono_fijo,certificado_laboral,cedu,codigo_animal) values (tel_con, dir_con, tel_fij, cer_lab, cedu,con_ani);
+create procedure usuario_postulacion_inser(tel_con varchar(20), dir_con varchar(20), tel_fij varchar(20), cer_lab varchar(255),ced_pdf varchar(255),est int(3),res int(3),ub varchar(100),tip varchar(100),resu int(4), cedu varchar(20),con_ani int(30))
+insert into postulacion (telefono_contacto,direccion_contacto,telefono_fijo,certificado_laboral,cedula_pdf,estrato,residentes,ubicacion,tipo_vivienta,resultado_puntos,cedu,codigo_animal) values (tel_con, dir_con, tel_fij, cer_lab,ced_pdf,est,res,ub,tip,resu, cedu,con_ani);
+
 
 /*Modificar Postulacion*/
 create procedure usuario_postulacion_actu(tel_con varchar(20), dir_con varchar(20), tel_fij varchar(20), cer_lab varchar(255), cedul varchar(20),cod_post int(30))
