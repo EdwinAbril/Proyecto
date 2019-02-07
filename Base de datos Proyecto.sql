@@ -126,6 +126,52 @@ values
 ('2018/01/27','Parque Sabana','3 horas'),
 ('2018/02/10','Parque Central','3 horas');
 
+create table preguntas
+(pregunta1 varchar(200),
+pregunta2 varchar(200),
+pregunta3 varchar(200),
+pregunta4 varchar(200),
+pregunta5 varchar(200),
+pregunta6 varchar(200),
+pregunta7 varchar(200),
+pregunta8 varchar(200),
+pregunta9 varchar(200),
+pregunta10 varchar(200),
+pregunta11 varchar(200),
+pregunta12 varchar(200),
+pregunta13 varchar(200),
+pregunta14 varchar(200),
+pregunta15 varchar(200),
+pregunta16 varchar(200),
+pregunta17 varchar(200),
+pregunta18 varchar(200),
+pregunta19 varchar(200),
+pregunta20 varchar(200),
+respuesta1 int(4),
+respuesta2 int(4),
+respuesta3 int(4),
+respuesta4 int(4),
+respuesta5 int(4),
+respuesta6 int(4),
+respuesta7 int(4),
+respuesta8 int(4),
+respuesta9 int(4),
+respuesta10 int(4),
+respuesta11 int(4),
+respuesta12 int(4),
+respuesta13 int(4),
+respuesta14 int(4),
+respuesta15 int(4),
+respuesta16 int(4),
+respuesta17 int(4),
+respuesta18 int(4),
+respuesta19 int(4),
+respuesta20 int(4),
+cedula varchar(50),
+constraint ciu foreign key (cedula) references ciudadano (cedula) on delete cascade on update cascade);
+
+create table respuesta_pre
+(respuesta_fin int(4));
 
 create table postulacion
 (codigo_postulacion int (30) auto_increment primary key,
@@ -133,7 +179,14 @@ telefono_contacto varchar (20),
 direccion_contacto varchar (20),
 telefono_fijo varchar (20),
 certificado_laboral varchar(255),
+cedula_pdf varchar(255),
+estrato int(3),
+residentes int(3),
+ubicacion varchar(100),
+tipo_vivienta varchar(100),
+resultado_puntos int(4),
 cedu varchar (50),
+constraint res foreign key (resultado_puntos) references respuesta(respuesta_fin) on delete cascade on update cascade,
 constraint ciu foreign key (cedu) references ciudadano (cedula) on delete cascade on update cascade);
 alter table postulacion add codigo_animal int(30);
 alter table postulacion add constraint omaiba foreign key (codigo_animal) references animal (codigo_animal) on delete cascade on update cascade;
@@ -150,8 +203,17 @@ postulacion int (30),
 telefono_contacto varchar (20),
 direccion_contacto varchar (20),
 telefono_fijo varchar (20),
+certificado_laboral varchar(255),
+cedula_pdf varchar(255),
+estrato int(3),
+residentes int(3),
+ubicacion varchar(100),
+tipo_vivienta varchar(100),
+resultado_puntos int(4),
 cedu varchar (50),
-animal int(30));
+animal int(30),
+constraint res foreign key (resultado_puntos) references respuesta(respuesta_fin) on delete cascade on update cascade
+);
 alter table seguimiento add constraint naur foreign key (animal) references animal (codigo_animal) on delete cascade on update cascade;
 alter table seguimiento add constraint pos foreign key(postulacion) references postulacion (codigo_postulacion) on delete cascade on update cascade;
 alter table seguimiento add constraint ciuxp foreign key (cedu) references ciudadano (cedula) on delete cascade on update cascade;
@@ -182,6 +244,8 @@ cedula_funcionario varchar(50) primary key,
 telefono_funcionario varchar(30) not null,
 nombre_funcionario varchar (50) not null,
 correo_funcionario varchar (100) not null,
+cargo varchar(50),
+dependencia varchar(50),
 constraint ced foreign key (cedula_funcionario) references login_usuarios(nombre_usuario) on delete cascade on update cascade
 );
 
@@ -233,12 +297,12 @@ create table adopcion
 (codigo_adopcion int (30) primary key auto_increment,
 animal int(30),
 cedula varchar(50),
-constraint animali foreign key(animal) references adoptados(codigo_adoptado));
+foto_animal varchar (255),
+Funcionario_encargardo varchar(50),
+constraint animali foreign key(animal) references adoptados(codigo_adoptado),
+constraint funcion foreign key(Funcionario_encargado) references funcionario(cedula_funcionario));
 alter table adopcion add mensaje varchar(100);
-insert into adopcion(animal,cedula,mensaje)
-values
-('1','','asda'),
-('2','','asdasd');
+
 
 create table denuncia
 (codigo_denuncia int (30) auto_increment primary key,
@@ -256,21 +320,6 @@ values
 ('2018/04/26','abandono','1001263254');
 
 
-
-create table respuesta
-(codigo_respuesta int (30) primary key auto_increment,
-fecha_respuesta date,
-cod_denu int (30) not null,
-ced_funcio varchar(30)not null,
-constraint funci foreign key (ced_funcio) references funcionario(cedula_funcionario) on delete cascade on update cascade,
-constraint denun foreign key (cod_denu) references denuncia(codigo_denuncia) on delete cascade on update cascade);
-
--- drop table respuesta;
-
-insert into respuesta (fecha_respuesta,ced_funcio,cod_denu)
-values
-('2018/04/15','68470826',1),
-('2018/06/26','68470826',2);
 
 create table comentarios
 (codigo_comentario int (30) auto_increment primary key ,
@@ -322,6 +371,9 @@ create table respuestausuario
 (codigo_positivo int(30) Auto_Increment primary key,
 cedula_respuesta varchar(50),
 mensaje varchar(200),
+tipo varchar(50),
+ced_funcio varchar(30)not null,
+constraint funci foreign key (ced_funcio) references funcionario(cedula_funcionario) on delete cascade on update cascade,
 constraint cere foreign key(cedula_respuesta) references ciudadano(cedula) on delete cascade on update cascade);
 
 
