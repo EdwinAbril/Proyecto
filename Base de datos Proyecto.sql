@@ -171,7 +171,7 @@ cedula varchar(50),
 constraint ciu foreign key (cedula) references ciudadano (cedula) on delete cascade on update cascade);
 
 create table respuesta_pre
-(respuesta_fin int(4));
+(respuesta_fin int(4) primary key);
 
 create table postulacion
 (codigo_postulacion int (30) auto_increment primary key,
@@ -186,8 +186,8 @@ ubicacion varchar(100),
 tipo_vivienta varchar(100),
 resultado_puntos int(4),
 cedu varchar (50),
-constraint res foreign key (resultado_puntos) references respuesta(respuesta_fin) on delete cascade on update cascade,
-constraint ciu foreign key (cedu) references ciudadano (cedula) on delete cascade on update cascade);
+constraint resi foreign key (resultado_puntos) references respuesta_pre(respuesta_fin) on delete cascade on update cascade,
+constraint ciu foreign key (cedu) references ciudadano(cedula) on delete cascade on update cascade);
 alter table postulacion add codigo_animal int(30);
 alter table postulacion add constraint omaiba foreign key (codigo_animal) references animal (codigo_animal) on delete cascade on update cascade;
 insert into postulacion(telefono_contacto,direccion_contacto,telefono_fijo,certificado_laboral,cedu,codigo_animal)
