@@ -127,27 +127,7 @@ values
 ('2018/02/10','Parque Central','3 horas');
 
 create table preguntas
-(pregunta1 varchar(200),
-pregunta2 varchar(200),
-pregunta3 varchar(200),
-pregunta4 varchar(200),
-pregunta5 varchar(200),
-pregunta6 varchar(200),
-pregunta7 varchar(200),
-pregunta8 varchar(200),
-pregunta9 varchar(200),
-pregunta10 varchar(200),
-pregunta11 varchar(200),
-pregunta12 varchar(200),
-pregunta13 varchar(200),
-pregunta14 varchar(200),
-pregunta15 varchar(200),
-pregunta16 varchar(200),
-pregunta17 varchar(200),
-pregunta18 varchar(200),
-pregunta19 varchar(200),
-pregunta20 varchar(200),
-respuesta1 int(4),
+(respuesta1 int(4),
 respuesta2 int(4),
 respuesta3 int(4),
 respuesta4 int(4),
@@ -170,6 +150,8 @@ respuesta20 int(4),
 cedula varchar(50),
 constraint ciu foreign key (cedula) references ciudadano (cedula) on delete cascade on update cascade);
 
+-- drop table preguntas;
+
 create table respuesta_pre
 (respuesta_fin int(4) primary key);
 
@@ -187,13 +169,9 @@ tipo_vivienta varchar(100),
 resultado_puntos int(4),
 cedu varchar (50),
 constraint resi foreign key (resultado_puntos) references respuesta_pre(respuesta_fin) on delete cascade on update cascade,
-constraint ciu foreign key (cedu) references ciudadano(cedula) on delete cascade on update cascade);
+constraint ciud foreign key (cedu) references ciudadano(cedula) on delete cascade on update cascade);
 alter table postulacion add codigo_animal int(30);
 alter table postulacion add constraint omaiba foreign key (codigo_animal) references animal (codigo_animal) on delete cascade on update cascade;
-insert into postulacion(telefono_contacto,direccion_contacto,telefono_fijo,certificado_laboral,cedu,codigo_animal)
-values 
-('3137506273','Calle 100#52-32','8236611','','9907162019',1),
-('3146748971','Calle 4#98-26','82314887','','9907162019',2);
 
 -- drop table postulacion;
 
@@ -212,7 +190,7 @@ tipo_vivienta varchar(100),
 resultado_puntos int(4),
 cedu varchar (50),
 animal int(30),
-constraint res foreign key (resultado_puntos) references respuesta(respuesta_fin) on delete cascade on update cascade
+constraint res foreign key (resultado_puntos) references respuesta_pre(respuesta_fin) on delete cascade on update cascade
 );
 alter table seguimiento add constraint naur foreign key (animal) references animal (codigo_animal) on delete cascade on update cascade;
 alter table seguimiento add constraint pos foreign key(postulacion) references postulacion (codigo_postulacion) on delete cascade on update cascade;
@@ -298,9 +276,9 @@ create table adopcion
 animal int(30),
 cedula varchar(50),
 foto_animal varchar (255),
-Funcionario_encargardo varchar(50),
+funcionario_encargado varchar(50),
 constraint animali foreign key(animal) references adoptados(codigo_adoptado),
-constraint funcion foreign key(Funcionario_encargado) references funcionario(cedula_funcionario));
+constraint funcion foreign key(funcionario_encargado) references funcionario(cedula_funcionario));
 alter table adopcion add mensaje varchar(100);
 
 
@@ -329,42 +307,6 @@ cod_adop int (30)not null,
 constraint adopci foreign key (cod_adop) references adopcion (codigo_adopcion) on delete cascade on update cascade);
 
 -- drop table comentarios; 
-
-insert into comentarios (fecha_comentario,cuerpo,cod_adop)
-values
-('2018/03/12','proceso exitoso',1),
-('2018/02/28','proceso regular',2);
-
-CREATE TABLE usuarios(
-    nom_usuario VARCHAR(50) primary key,
-    clave VARCHAR(50),
-    rol4 int(30),
-    constraint ro4 foreign key (rol4) references roles(rol) on delete cascade on update cascade
-);
-
-insert into usuarios(nom_usuario,clave,rol4) values
-('Alf','4321',1);
-
-create table usuario_funcionario
-(cedula_fun varchar (50) primary key,
-clave varchar(50),
-rol2 int(30),
-constraint rof foreign key (rol2) references roles(rol) on delete cascade on update cascade
-);
-insert into usuario_funcionario(cedula_fun,clave,rol2)
-values('9907162019','1111',2),
-('1001263254','0000',2);
-
-create table usuario_veterinaria
-(
-nit_veterinaria varchar(50) primary key,
-clave varchar(50),
-rol3 int(30),
-constraint rov foreign key (rol3) references roles(rol) on delete cascade on update cascade
-);
-insert into usuario_veterinaria(nit_veterinaria,clave,rol3)
-values('811192822-A','1111',3),
-('811192822-B','0000',3);
 
 
 create table respuestausuario
