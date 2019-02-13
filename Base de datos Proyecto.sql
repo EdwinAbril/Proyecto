@@ -153,7 +153,9 @@ constraint ciu foreign key (cedula) references ciudadano (cedula) on delete casc
 -- drop table preguntas;
 
 create table respuesta_pre
-(respuesta_fin int(4) primary key);
+(respuesta_fin int(4),
+cedula varchar(50),
+constraint rciu foreign key (cedula) references ciudadano (cedula) on delete cascade on update cascade);
 
 create table postulacion
 (codigo_postulacion int (30) auto_increment primary key,
@@ -167,8 +169,8 @@ residentes int(3),
 ubicacion varchar(100),
 tipo_vivienta varchar(100),
 resultado_puntos int(4),
+recibo_pub varchar(255),
 cedu varchar (50),
-constraint resi foreign key (resultado_puntos) references respuesta_pre(respuesta_fin) on delete cascade on update cascade,
 constraint ciud foreign key (cedu) references ciudadano(cedula) on delete cascade on update cascade);
 alter table postulacion add codigo_animal int(30);
 alter table postulacion add constraint omaiba foreign key (codigo_animal) references animal (codigo_animal) on delete cascade on update cascade;
@@ -188,9 +190,9 @@ residentes int(3),
 ubicacion varchar(100),
 tipo_vivienta varchar(100),
 resultado_puntos int(4),
+recibo_pub varchar(255),
 cedu varchar (50),
-animal int(30),
-constraint res foreign key (resultado_puntos) references respuesta_pre(respuesta_fin) on delete cascade on update cascade
+animal int(30)
 );
 alter table seguimiento add constraint naur foreign key (animal) references animal (codigo_animal) on delete cascade on update cascade;
 alter table seguimiento add constraint pos foreign key(postulacion) references postulacion (codigo_postulacion) on delete cascade on update cascade;
@@ -481,9 +483,8 @@ delete from mascota where codigo_mascota=cod;
 /*POSTULACION*/
 
 /*Insertar Postulacion*/
-create procedure usuario_postulacion_inser(tel_con varchar(20), dir_con varchar(20), tel_fij varchar(20), cer_lab varchar(255),ced_pdf varchar(255),est int(3),res int(3),ub varchar(100),tip varchar(100),resu int(4), cedu varchar(20),con_ani int(30))
-insert into postulacion (telefono_contacto,direccion_contacto,telefono_fijo,certificado_laboral,cedula_pdf,estrato,residentes,ubicacion,tipo_vivienta,resultado_puntos,cedu,codigo_animal) values (tel_con, dir_con, tel_fij, cer_lab,ced_pdf,est,res,ub,tip,resu, cedu,con_ani);
-
+create procedure usuario_postulacion_inser(tel_con varchar(20), dir_con varchar(20), tel_fij varchar(20), cer_lab varchar(255),ced_pdf varchar(255),est int(3),res int(3),ub varchar(100),tip varchar(100),resu int(4),reci varchar(255), cedu varchar(20),con_ani int(30))
+insert into postulacion (telefono_contacto,direccion_contacto,telefono_fijo,certificado_laboral,cedula_pdf,estrato,residentes,ubicacion,tipo_vivienta,resultado_puntos,recibo_pub,cedu,codigo_animal) values (tel_con, dir_con, tel_fij, cer_lab,ced_pdf,est,res,ub,tip,resu,reci,cedu,con_ani);
 
 /*Modificar Postulacion*/
 create procedure usuario_postulacion_actu(tel_con varchar(20), dir_con varchar(20), tel_fij varchar(20), cer_lab varchar(255), cedul varchar(20),cod_post int(30))
@@ -497,8 +498,8 @@ delete from postulacion where codigo_postulacion=codpost;
 
 /*Insertar Seguimiento*/
 
-Create procedure FunInsertar_Seguimiento(cp  int(30),tel varchar(20),dir varchar(20),fij varchar(20),ced varchar(50),ani int(30))
-insert into seguimiento (postulacion,telefono_contacto,direccion_contacto,telefono_fijo,cedu,animal) values(cp,tel,dir,fij,ced,ani);
+Create procedure FunInsertar_Seguimiento(cp  int(30),tel varchar(20),dir varchar(20),fij varchar(20),cer varchar(255),fot varchar(255),est int(3),res int(3),ubi varchar(100),tvi varchar(100),rpun int(4),rpub varchar(255),ced varchar(50),ani int(30))
+insert into seguimiento (postulacion,telefono_contacto,direccion_contacto,telefono_fijo,certificado_laboral,cedula_pdf,estrato,residentes,ubicacion,tipo_vivienta,resultado_puntos,cedu,animal) values(cp,tel,dir,fij,cer,fot,est,res,ubi,tvi,rpun,rpub,ced,ani);
 
 -- drop procedure FunInsertar_Seguimiento;
 
