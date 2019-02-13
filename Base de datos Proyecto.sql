@@ -312,7 +312,8 @@ constraint adopci foreign key (cod_adop) references adopcion (codigo_adopcion) o
 
 
 create table respuestausuario
-(codigo_positivo int(30) Auto_Increment primary key,
+(icono varchar(255),
+codigo_positivo int(30) Auto_Increment primary key,
 cedula_respuesta varchar(50),
 mensaje varchar(200),
 tipo varchar(50),
