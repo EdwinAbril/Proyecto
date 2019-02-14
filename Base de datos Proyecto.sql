@@ -157,6 +157,9 @@ create table respuesta_pre
 cedula varchar(50),
 constraint rciu foreign key (cedula) references ciudadano (cedula) on delete cascade on update cascade);
 
+insert into respuesta_pre
+values(20,'1001263254');
+
 create table postulacion
 (codigo_postulacion int (30) auto_increment primary key,
 telefono_contacto varchar (20),
@@ -323,6 +326,25 @@ constraint cere foreign key(cedula_respuesta) references ciudadano(cedula) on de
 
 
 -- drop table usuarios;
+
+-- PREGUNTAS
+
+/*Preguntas*/
+-- use proyecto;
+create procedure pregunta
+(res1 int(4),res2 int(4),res3 int(4),res4 int(4),res5 int(4),res6 int(4),res7 int(4),res8 int(4),res9 int(4),res10 int(4),
+res11 int(4),res12 int(4),res13 int(4),res14 int(4),res15 int(4),res16 int(4),res17 int(4),res18 int(4),res19 int(4),res20 int(4),ced varchar(50))
+insert into preguntas(respuesta1,respuesta2,respuesta3,respuesta4,respuesta5,respuesta6,respuesta7,respuesta8,respuesta9,respuesta10,
+respuesta11,respuesta12,respuesta13,respuesta14,respuesta15,respuesta16,respuesta17,respuesta18,respuesta19,respuesta20,cedula) 
+values(res1,res2,res3,res4,res5,res6,res7,res8,res9,res10,res11,res12,res13,res14,res15,res16,res17,res18,res19,res20,ced);
+
+call pregunta(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,'9907162019'); 
+
+create procedure preguntafin(rt int(4),ced varchar(50))
+insert into respuesta_pre(respuesta_fin,cedula) 
+values(rt,ced);
+
+
 /*Respuesta positiva*/
 create procedure inser_respuesta_positiva(cedu varchar(50),mensa varchar(200))
 insert into respuestausuario (cedula_respuesta,mensaje) values(cedu,mensa);
