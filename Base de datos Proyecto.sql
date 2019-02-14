@@ -277,7 +277,6 @@ create table adopcion
 (codigo_adopcion int (30) primary key auto_increment,
 animal int(30),
 cedula varchar(50),
-foto_animal varchar (255),
 funcionario_encargado varchar(50),
 constraint animali foreign key(animal) references adoptados(codigo_adoptado),
 constraint funcion foreign key(funcionario_encargado) references funcionario(cedula_funcionario));
@@ -316,7 +315,6 @@ create table respuestausuario
 codigo_positivo int(30) Auto_Increment primary key,
 cedula_respuesta varchar(50),
 mensaje varchar(200),
-tipo varchar(50),
 ced_funcio varchar(30)not null,
 constraint funci foreign key (ced_funcio) references funcionario(cedula_funcionario) on delete cascade on update cascade,
 constraint cere foreign key(cedula_respuesta) references ciudadano(cedula) on delete cascade on update cascade);
@@ -324,9 +322,8 @@ constraint cere foreign key(cedula_respuesta) references ciudadano(cedula) on de
 
 -- drop table usuarios;
 /*Respuesta positiva*/
-create procedure inser_respuesta_positiva(cedu varchar(50),mensa varchar(200))
-insert into respuestausuario (cedula_respuesta,mensaje) values(cedu,mensa);
-
+create procedure inser_respuesta_positiva(icon varchar(255),cedu varchar(50),mensa varchar(200),enc varchar(30))
+insert into respuestausuario (icono,cedula_respuesta,mensaje,ced_funcio) values(icon,cedu,mensa,enc);
 
 -- drop procedure inser_respuesta_positiva;
 /*ADMINISTRADOR*/
@@ -498,12 +495,10 @@ delete from postulacion where codigo_postulacion=codpost;
 /*SEGUIMIENTO*/
 
 /*Insertar Seguimiento*/
-
-Create procedure FunInsertar_Seguimiento(cp  int(30),tel varchar(20),dir varchar(20),fij varchar(20),cer varchar(255),fot varchar(255),est int(3),res int(3),ubi varchar(100),tvi varchar(100),rpun int(4),rpub varchar(255),ced varchar(50),ani int(30))
-insert into seguimiento (postulacion,telefono_contacto,direccion_contacto,telefono_fijo,certificado_laboral,cedula_pdf,estrato,residentes,ubicacion,tipo_vivienta,resultado_puntos,cedu,animal) values(cp,tel,dir,fij,cer,fot,est,res,ubi,tvi,rpun,rpub,ced,ani);
-
+create procedure FunInsertar_Seguimiento(postulacion int(30),tel_con varchar(20), dir_con varchar(20), tel_fij varchar(20), cer_lab varchar(255),ced_pdf varchar(255),est int(3),res int(3),ub varchar(100),tip varchar(100),resu int(4),reci varchar(255), cedu varchar(20),con_ani int(30))
+insert into seguimiento (postulacion,telefono_contacto,direccion_contacto,telefono_fijo,certificado_laboral,cedula_pdf,estrato,residentes,ubicacion,tipo_vivienta,resultado_puntos,recibo_pub,cedu,animal) values (postulacion,tel_con, dir_con, tel_fij, cer_lab,ced_pdf,est,res,ub,tip,resu,reci,cedu,con_ani);
+call FunInsertar_Seguimiento (2,'3112828817','cale aqui','8266610','1cer','2cer',2,2,'urbano','apartacho',19,'cer3','1073523675',8);
 -- drop procedure FunInsertar_Seguimiento;
-
 
 /*Modificar Seguimiento*/
 Create procedure FunModificar_Seguimiento( cod int(30), cdp int(30))
@@ -548,6 +543,7 @@ insert into ciudadano(usurio_ciu) values (nom);
 
 create procedure inser_us_vet(nit varchar(50),rol int(30))
 insert into veterinaria (nit_veterinaria,rol2) values(nit,rol);
+
 
 
 /*Modificar Usuarios*/
