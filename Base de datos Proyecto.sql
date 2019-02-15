@@ -127,34 +127,34 @@ values
 ('2018/02/10','Parque Central','3 horas');
 
 create table preguntas
-(respuesta1 int(4),
-respuesta2 int(4),
-respuesta3 int(4),
-respuesta4 int(4),
-respuesta5 int(4),
-respuesta6 int(4),
-respuesta7 int(4),
-respuesta8 int(4),
-respuesta9 int(4),
-respuesta10 int(4),
-respuesta11 int(4),
-respuesta12 int(4),
-respuesta13 int(4),
-respuesta14 int(4),
-respuesta15 int(4),
-respuesta16 int(4),
-respuesta17 int(4),
-respuesta18 int(4),
-respuesta19 int(4),
-respuesta20 int(4),
-cedula varchar(50),
+(respuesta1 int,
+respuesta2 int,
+respuesta3 int,
+respuesta4 int,
+respuesta5 int,
+respuesta6 int,
+respuesta7 int,
+respuesta8 int,
+respuesta9 int,
+respuesta10 int,
+respuesta11 int,
+respuesta12 int,
+respuesta13 int,
+respuesta14 int,
+respuesta15 int,
+respuesta16 int,
+respuesta17 int,
+respuesta18 int,
+respuesta19 int,
+respuesta20 int,
+cedula varchar(50) primary key,
 constraint ciu foreign key (cedula) references ciudadano (cedula) on delete cascade on update cascade);
 
 -- drop table preguntas;
 
 create table respuesta_pre
-(respuesta_fin int(4),
-cedula varchar(50),
+(respuesta_fin int,
+cedula varchar(50) primary key,
 constraint rciu foreign key (cedula) references ciudadano (cedula) on delete cascade on update cascade);
 
 insert into respuesta_pre
