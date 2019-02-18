@@ -277,7 +277,8 @@ values
 -- drop table asiste;
 
 create table adopcion
-(codigo_adopcion int (30) primary key auto_increment,
+(icono varchar(255),
+codigo_adopcion int (30) primary key auto_increment,
 animal int(30),
 cedula varchar(50),
 funcionario_encargado varchar(50),
@@ -519,7 +520,6 @@ delete from postulacion where codigo_postulacion=codpost;
 /*Insertar Seguimiento*/
 create procedure FunInsertar_Seguimiento(postulacion int(30),tel_con varchar(20), dir_con varchar(20), tel_fij varchar(20), cer_lab varchar(255),ced_pdf varchar(255),est int(3),res int(3),ub varchar(100),tip varchar(100),resu int(4),reci varchar(255), cedu varchar(20),con_ani int(30))
 insert into seguimiento (postulacion,telefono_contacto,direccion_contacto,telefono_fijo,certificado_laboral,cedula_pdf,estrato,residentes,ubicacion,tipo_vivienta,resultado_puntos,recibo_pub,cedu,animal) values (postulacion,tel_con, dir_con, tel_fij, cer_lab,ced_pdf,est,res,ub,tip,resu,reci,cedu,con_ani);
-call FunInsertar_Seguimiento (2,'3112828817','cale aqui','8266610','1cer','2cer',2,2,'urbano','apartacho',19,'cer3','1073523675',8);
 -- drop procedure FunInsertar_Seguimiento;
 
 /*Modificar Seguimiento*/
