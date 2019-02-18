@@ -158,8 +158,9 @@ cedula varchar(50) primary key,
 respuesta_fin int,
 constraint rciu foreign key (cedula) references ciudadano (cedula) on delete cascade on update cascade);
 
+-- drop table respuesta_pre;
 insert into respuesta_pre
-values(20,'1001263254');
+values('1001263254',20);
 
 create table postulacion
 (codigo_postulacion int (30) auto_increment primary key,
