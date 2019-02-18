@@ -153,8 +153,9 @@ constraint ciu foreign key (cedula) references ciudadano (cedula) on delete casc
 -- drop table preguntas;
 
 create table respuesta_pre
-(respuesta_fin int,
+(
 cedula varchar(50) primary key,
+respuesta_fin int,
 constraint rciu foreign key (cedula) references ciudadano (cedula) on delete cascade on update cascade);
 
 insert into respuesta_pre
