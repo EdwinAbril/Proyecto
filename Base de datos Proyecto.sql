@@ -339,11 +339,15 @@ insert into preguntas(respuesta1,respuesta2,respuesta3,respuesta4,respuesta5,res
 respuesta11,respuesta12,respuesta13,respuesta14,respuesta15,respuesta16,respuesta17,respuesta18,respuesta19,respuesta20,cedula) 
 values(res1,res2,res3,res4,res5,res6,res7,res8,res9,res10,res11,res12,res13,res14,res15,res16,res17,res18,res19,res20,ced);
 
-call pregunta(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,'9907162019'); 
+call pregunta(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,'100123123124'); 
 
-create procedure preguntafin(rt int(4),ced varchar(50))
-insert into respuesta_pre(respuesta_fin,cedula) 
-values(rt,ced);
+create procedure preguntafin(ced varchar(50),rt int(11))
+insert into respuesta_pre(cedula,respuesta_fin) 
+values(ced,rt);
+
+call preguntafin('99071620192',15);
+
+-- drop procedure preguntafin;
 
 
 /*Respuesta positiva*/
