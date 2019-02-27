@@ -60,7 +60,7 @@ edad_animal varchar(5) not null,
 raza_animal varchar(30) not null
 );
 alter table animal add foto varchar(255);
-alter table animal add tamaño varchar(30);
+alter table animal add tamano varchar(30);
 alter table animal add genero varchar(30);
 alter table animal add color varchar(30);
 
@@ -85,7 +85,7 @@ edad_animal varchar(5) not null,
 raza_animal varchar(30) not null
 );
 alter table adoptados add foto varchar(255);
-alter table adoptados add tamaño varchar(30);
+alter table adoptados add tamano varchar(30);
 alter table adoptados add genero varchar(30);
 alter table adoptados add color varchar(30);
 
@@ -252,14 +252,14 @@ tipo_mascota varchar (50),
 edad_mascota varchar(5),
 raza_mascota varchar(30),
 foto varchar(255),
-tamaño varchar(30),
+tamano varchar(30),
 genero varchar(30),
 color varchar(30),
 ced varchar (20),
 constraint ciuda foreign key (ced) references ciudadano (cedula) on delete cascade on update cascade);
 
 
-insert into mascota(nombre_mascota,tipo_mascota,edad_mascota,raza_mascota,foto,tamaño,genero,color,ced)
+insert into mascota(nombre_mascota,tipo_mascota,edad_mascota,raza_mascota,foto,tamano,genero,color,ced)
 values
 ('poppy','perro','2','pitbull','','grande','Hembra','Blanco','9907162019'),
 ('garen','gato','3','Persa','','pequeño','Macho','Negro','1001263254');
@@ -339,13 +339,11 @@ insert into preguntas(respuesta1,respuesta2,respuesta3,respuesta4,respuesta5,res
 respuesta11,respuesta12,respuesta13,respuesta14,respuesta15,respuesta16,respuesta17,respuesta18,respuesta19,respuesta20,cedula) 
 values(res1,res2,res3,res4,res5,res6,res7,res8,res9,res10,res11,res12,res13,res14,res15,res16,res17,res18,res19,res20,ced);
 
-call pregunta(1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,'100123123124'); 
 
 create procedure preguntafin(ced varchar(50),rt int(11))
 insert into respuesta_pre(cedula,respuesta_fin) 
 values(ced,rt);
 
-call preguntafin('99071620192',15);
 
 -- drop procedure preguntafin;
 
@@ -364,6 +362,8 @@ insert into login_usuarios (nombre_usuario,clave,rol_login,foto)values(us,cla,ro
 create procedure login_usuariosact_admin_Admin(us varchar(50),cla varchar(50),fot varchar(255))
 update login_usuarios set clave=cla,foto=fot where nombre_usuario=us;
 
+call login_usuariosact_admin_Admin('Admin','123456798','Hola');
+
 -- drop procedure act_admin_Admin;
 /*Eliminar Administrador*/
 create procedure bor_admin_Admin(us varchar(50))
@@ -379,8 +379,10 @@ insert into Adopcion (animal,cedula,mensaje) values(ani,cedu,mens);
 
 
 
-Create procedure VetModificar_Adopcion( cod int(30), cdan int(30), cods int(30),mens varchar(100))
-Update Adopcion set cod_ani=cdan, cod_seg=cods, mensaje=mens where codigo_adopcion=cod;
+Create procedure VetModificar_Adopcion( cod int(30),mens varchar(100))
+Update Adopcion set mensaje=mens where codigo_adopcion=cod;
+
+drop procedure VetModificar_Adopcion;
 
 Create procedure VetEliminar_Adopcion( cod int(30))
 Delete from Adopcion where codigo_adopcion=cod;
@@ -389,18 +391,18 @@ Delete from Adopcion where codigo_adopcion=cod;
 
 /*Insertar Animal*/
 create procedure inser_animal_Admin(nombre varchar(50),tipo varchar(50),edad varchar(5),raza varchar(30),imagen varchar(255),tama varchar(30),gen varchar(30),col varchar(30))
-insert into animal (nombre_animal,tipo_animal,edad_animal,raza_animal,foto,tamaño,genero,color) values (nombre,tipo,edad,raza,imagen,tama,gen,col);
+insert into animal (nombre_animal,tipo_animal,edad_animal,raza_animal,foto,tamano,genero,color) values (nombre,tipo,edad,raza,imagen,tama,gen,col);
 -- drop procedure inser_animal_Admin;
 
 create procedure inser_adoptado_Admin(nombre varchar(50),tipo varchar(50),edad varchar(5),raza varchar(30),imagen varchar(255),tama varchar(30),gen varchar(30),col varchar(30))
-insert into adoptados (nombre_animal,tipo_animal,edad_animal,raza_animal,foto,tamaño,genero,color) values (nombre,tipo,edad,raza,imagen,tama,gen,col);
+insert into adoptados (nombre_animal,tipo_animal,edad_animal,raza_animal,foto,tamano,genero,color) values (nombre,tipo,edad,raza,imagen,tama,gen,col);
 
 /*Modificar Animal*/
 create procedure act_animal_Admin(codigo int(30),nombre varchar(50),tipo varchar(50),edad varchar(5),raza varchar(30),imagen varchar(255),tama varchar(30),gen varchar(30),col varchar(30))
-update animal set nombre_animal=nombre,tipo_animal=tipo,edad_animal=edad,raza_animal=raza, foto=imagen, tamaño=tama, genero=gen, color=col where codigo_animal=codigo;
+update animal set nombre_animal=nombre,tipo_animal=tipo,edad_animal=edad,raza_animal=raza, foto=imagen, tamano=tama, genero=gen, color=col where codigo_animal=codigo;
 
 create procedure act_adoptado_Admin(codigo int(30),nombre varchar(50),tipo varchar(50),edad varchar(5),raza varchar(30),imagen varchar(255),tama varchar(30),gen varchar(30),col varchar(30))
-update adoptados set nombre_animal=nombre,tipo_animal=tipo,edad_animal=edad,raza_animal=raza, foto=imagen, tamaño=tama, genero=gen, color=col where codigo_adoptado=codigo;
+update adoptados set nombre_animal=nombre,tipo_animal=tipo,edad_animal=edad,raza_animal=raza, foto=imagen, tamano=tama, genero=gen, color=col where codigo_adoptado=codigo;
 
 
 -- drop procedure act_animal_Admin;
@@ -409,6 +411,8 @@ update adoptados set nombre_animal=nombre,tipo_animal=tipo,edad_animal=edad,raza
 create procedure bor_animal_Admin(codig int(30))
 delete from animal where codigo_animal=codig;
 
+create procedure bor_animal_Admin2(codig int(30))
+delete from adoptados where codigo_adoptado=codig;
 -- drop procedure bor_animal_Admin;
 
 /*CIUDADANO*/
@@ -488,17 +492,17 @@ Delete from funcionario where cedula_funcionario=cedu;
 
 /*Insertar Mascota*/
 create procedure usuario_mascota_inser(nom_mas varchar(30), tipo varchar(50), edad varchar(5), raza varchar(30), fot varchar(255), tam varchar(30),gen varchar(30),col varchar(30) ,cedu varchar(20))
-insert into mascota (nombre_mascota,tipo_mascota,edad_mascota,raza_mascota,foto,tamaño,genero,color,ced) values (nom_mas,tipo,edad,raza,fot,tam,gen,col,cedu) ;
+insert into mascota (nombre_mascota,tipo_mascota,edad_mascota,raza_mascota,foto,tamano,genero,color,ced) values (nom_mas,tipo,edad,raza,fot,tam,gen,col,cedu) ;
 
 /*Insertar mascota adoptada*/
 create procedure usuario_mascota_adop(nom_mas varchar(30), tipo varchar(50), edad varchar(5), raza varchar(30),tam varchar(30),gen varchar(30),col varchar(30) ,cedu varchar(20))
-insert into mascota (nombre_mascota,tipo_mascota,edad_mascota,raza_mascota,tamaño,genero,color,ced) values (nom_mas,tipo,edad,raza,tam,gen,col,cedu) ;
+insert into mascota (nombre_mascota,tipo_mascota,edad_mascota,raza_mascota,tamano,genero,color,ced) values (nom_mas,tipo,edad,raza,tam,gen,col,cedu) ;
 
 -- drop procedure usuario_mascota_inser;
 /*Modificar Mascota*/
 create procedure usuario_mascota_actu
 (cod_mas int(30), nom_mas varchar(30), tipo varchar(50), edad varchar(5), raza varchar(30),fot varchar(255), tam varchar(30),gen varchar(30),col varchar(30) ,cedu varchar(20))
-update mascota set nombre_mascota=nom_mas, tipo_mascota=tipo, edad_mascota=edad, raza_mascota=raza, foto=fot, tamaño=tam, genero=gen, color=col where ced=cedu and codigo_mascota=cod_mas;
+update mascota set nombre_mascota=nom_mas, tipo_mascota=tipo, edad_mascota=edad, raza_mascota=raza, foto=fot, tamano=tam, genero=gen, color=col where ced=cedu and codigo_mascota=cod_mas;
 -- drop procedure usuario_mascota_actu;
 
 /*Eliminar Mascota*/
