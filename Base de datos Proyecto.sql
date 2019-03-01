@@ -480,8 +480,8 @@ Delete from jornada where codigo_jornada=codi;
 create procedure Insertar_Funcionario(cedula varchar(30),telefono varchar(30),nombre varchar(50),correo varchar(100),rol int(30))
 insert into funcionario  (cedula_funcionario,telefono_funcionario,nombre_funcionario,correo_funcionario,rol3)values(cedula,telefono,nombre,correo,rol);
 /*Modificar Funcionario*/
-Create procedure Modificar_Funcionario( ced varchar(30), tel varchar(30), nom varchar(50), cor varchar(100))
-Update Funcionario set telefono_funcionario=tel, nombre_funcionario=nom, correo_funcionario=cor where cedula_funcionario=ced; 
+Create procedure Modificar_Funcionario( ced varchar(30), tel varchar(30), nom varchar(50), cor varchar(100),dep varchar(50))
+Update Funcionario set telefono_funcionario=tel, nombre_funcionario=nom, correo_funcionario=cor, dependencia=dep where cedula_funcionario=ced; 
 -- drop procedure Modificar_Funcionario;
 /*Eliminar Funcionario*/
 Create procedure Eliminar_Funcionario( cedu varchar(30))
