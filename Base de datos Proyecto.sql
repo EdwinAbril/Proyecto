@@ -19,22 +19,14 @@ constraint ro0 foreign key (rol_login) references roles(rol) on delete cascade o
 );
 alter table login_usuarios add foto varchar(255);
 
-insert into login_usuarios(nombre_usuario,clave,rol_login)
-values('AlexElCapo','1111',4),
-('JuanMakia','0000',4),
-('811192822-A','veterinaria',3),
-('811192822-B','veterinaria',3),
-('811192822-C','veterinaria',3),
-('811192822-D','veterinaria',3),
-('72471422','0000',2),
-('52849421','0000',2),
-('68470826','0000',2),
-('98374971','0000',2),
-('41683731','0000',2),
-('Alf','4321',1);
+insert into login_usuarios(nombre_usuario,clave,rol_login,foto)
+values('Juan','123',4,'usuario.jpeg'),
+('Veterinaria-1','veterinaria',3,'usuario.jpeg'),
+('Funcionario-1','funcionario',2,'usuario,jpeg'),
+('Alf','admin',1,'usuario.jpeg');
 
-insert into login_usuarios(nombre_usuario,clave,rol_login)
-values ('Fla','4321',1);
+insert into login_usuarios(nombre_usuario,clave,rol_login,foto)
+values ('David','admin',1,'usuario.jpeg');
 
 
 create table ciudadano
@@ -49,8 +41,7 @@ constraint usu foreign key (usuario_ciu) references login_usuarios(nombre_usuari
 
 insert into ciudadano(cedula,nombre,telefono,direccion,correo,usuario_ciu)
 values 
-('9907162019','Alex','3132784923','cll 3 # 3-25','Alex.99@hotmail.com','AlexElCapo'),
-('1001263254','Juan','3101827462','cra 2 # 2-30','Juan.r4r3@hotmail.com','JuanMakia');
+('1234567898','Juan Rodriguez','3132784923','cll 3 # 3-25','Alex.99@hotmail.com','Juan');
 
 create table animal (
 codigo_animal int(30) auto_increment primary key,
@@ -64,18 +55,12 @@ alter table animal add tamano varchar(30);
 alter table animal add genero varchar(30);
 alter table animal add color varchar(30);
 
-insert into animal(nombre_animal,tipo_animal,edad_animal,raza_animal)
+insert into animal(nombre_animal,tipo_animal,edad_animal,raza_animal,foto,tamano,genero,color)
 values
-('Terry','Perro','3','Beagle'),
-('Joel','Perro','1','Doberman'),
-('Paco','Perro','2','Boxer'),
-('Roger','Perro','4','Gran Danes'),
-('Bob','Perro','5','Akita'),
-('Charly','Perro','3','Beagle'),
-('Lola','Gato','2','Persa'),
-('Mia','Gato','3','Bengala'),
-('Kira','Gato','1','Siames'),
-('Tom','Gato','1','Burmes');
+('Terry','Perro','3','Beagle','animal1.jpeg','Grande','Macho','Negro'),
+('Mifu','Gato','1','Persa','animal2.jpeg','Mediano','Macho','Cafe'),
+('Luna','Perro','2','Boxer','animal3.jpeg','Grande','Hembra','Negro y Cafe');
+
 
 create table adoptados(
 codigo_adoptado int(30) auto_increment primary key,
@@ -89,18 +74,11 @@ alter table adoptados add tamano varchar(30);
 alter table adoptados add genero varchar(30);
 alter table adoptados add color varchar(30);
 
-insert into adoptados(nombre_animal,tipo_animal,edad_animal,raza_animal)
+insert into adoptados(nombre_animal,tipo_animal,edad_animal,raza_animal,foto,tamano,genero,color)
 values
-('Terry','Perro','3','Beagle'),
-('Joel','Perro','1','Doberman'),
-('Paco','Perro','2','Boxer'),
-('Roger','Perro','4','Gran Danes'),
-('Bob','Perro','5','Akita'),
-('Charly','Perro','3','Beagle'),
-('Lola','Gato','2','Persa'),
-('Mia','Gato','3','Bengala'),
-('Kira','Gato','1','Siames'),
-('Tom','Gato','1','Burmes');
+('Terry','Perro','3','Beagle','animal1.jpeg','Grande','Macho','Negro'),
+('Mifu','Gato','1','Persa','animal2.jpeg','Mediano','Macho','Cafe'),
+('Luna','Perro','2','Boxer','animal3.jpeg','Grande','Hembra','Negro y Cafe');
 
 
 create table jornada
@@ -114,18 +92,10 @@ alter table jornada add foto varchar(255);
 
 -- drop table jornada;
 
-insert into jornada(fecha,lugar,duracion)
+insert into jornada(fecha,lugar,duracion,foto)
 values
-('2018/05/16','Parque Central','2 horas'),
-('2018/02/23','Parque de Mosquera','3 horas'),
-('2018/01/10','Parque Mi Mascota','3 horas'),
-('2017/04/15','Parque Las Aguas','3 horas'),
-('2019/12/10','Parque Las Aguas','3 horas'),
-('2018/03/25','Parque Sabana','3 horas'),
-('2018/09/30','Parque Mi Mascota','3 horas'),
-('2018/07/16','Parque Mi Mascota','3 horas'),
-('2018/01/27','Parque Sabana','3 horas'),
-('2018/02/10','Parque Central','3 horas');
+('2019/03/02','Parque Central','2 horas','evento1.jpeg'),
+('2019/03/01','Parque de Mosquera','3 horas','evento2.jpeg');
 
 create table preguntas
 (respuesta1 int,
@@ -160,8 +130,7 @@ respuesta_fin int,
 constraint rciu foreign key (cedula) references ciudadano (cedula) on delete cascade on update cascade);
 
 -- drop table respuesta_pre;
-insert into respuesta_pre
-values('1001263254',20);
+
 
 create table postulacion
 (codigo_postulacion int (30) auto_increment primary key,
@@ -220,10 +189,8 @@ constraint nit foreign key (nit_veterinaria) references login_usuarios(nombre_us
 
 insert into veterinaria(nit_veterinaria,telefono_veterinaria,nombre_veterinaria,direccion_veterinaria)
 values 
-('811192822-A','3137425832','Mis patitas','Calle 14#32-45'),
-('811192822-B','3142315647','Mis huellitas','Calle 13#05-45'),
-('811192822-C','3153216798','Mis mascotas','Calle 23#34-25'),
-('811192822-D','3113216547','Guau y miau','Calle 11#13-22');
+('Veterinaria-1','3137425832','Huellas Peludas','Calle 14#32-45');
+
 
 create table funcionario (
 cedula_funcionario varchar(50) primary key,
@@ -237,13 +204,10 @@ constraint ced foreign key (cedula_funcionario) references login_usuarios(nombre
 
 -- drop table funcionario;
 
-insert into funcionario(cedula_funcionario,telefono_funcionario,nombre_funcionario,correo_funcionario)
+insert into funcionario(cedula_funcionario,telefono_funcionario,nombre_funcionario,correo_funcionario,cargo,dependencia)
 values
-('72471422','3216440371','Manuel','manuelito@gmail.com'),
-('52849421','3135487561','Lucas','luquitas@gmail.com'),
-('68470826','3116548712','Juan','juansito@gmail.com'),
-('98374971','3135487654','Ivan','ivansito@gmail.com'),
-('41683731','3106547875','Sergio','sergiofon@gmail.com');
+('Funcionario-1','3216440371','Oscar Perez','oscar@gmail.com','Funcionario','Alcaldia Mosquera');
+
 
 
 create table mascota
@@ -262,8 +226,8 @@ constraint ciuda foreign key (ced) references ciudadano (cedula) on delete casca
 
 insert into mascota(nombre_mascota,tipo_mascota,edad_mascota,raza_mascota,foto,tamano,genero,color,ced)
 values
-('poppy','perro','2','pitbull','','grande','Hembra','Blanco','9907162019'),
-('garen','gato','3','Persa','','pequeño','Macho','Negro','1001263254');
+('poppy','Perro','2','Pitbull','animal1.jpeg','Grande','Hembra','Blanco','1234567898');
+
 
 
 create table asiste
@@ -272,10 +236,6 @@ cod_jornada int(30) ,
 constraint masco foreign key (cod_mascota) references mascota (codigo_mascota) on delete cascade on update cascade,
 constraint jorna foreign key (cod_jornada) references jornada (codigo_jornada) on delete cascade on update cascade);
 
-insert into asiste()
-values
-(),
-();
 
 -- drop table asiste;
 
@@ -300,10 +260,9 @@ alter table denuncia add mensaje varchar(250);
 alter table denuncia add foto varchar(250);
 -- drop table denuncia; 
 
-insert into denuncia (fecha_denuncia,descripcion_denuncia,cedul_ciudadano)
+insert into denuncia (fecha_denuncia,descripcion_denuncia,cedul_ciudadano,mensaje,foto)
 values
-('2018/05/27','abandono','9907162019'),
-('2018/04/26','abandono','1001263254');
+('2019/03/01','Abandono','1234567898','Abandono de un animal','denuncia1.jpeg');
 
 
 
@@ -363,7 +322,7 @@ insert into login_usuarios (nombre_usuario,clave,rol_login,foto)values(us,cla,ro
 create procedure login_usuariosact_admin_Admin(us varchar(50),cla varchar(50),fot varchar(255))
 update login_usuarios set clave=cla,foto=fot where nombre_usuario=us;
 
-call login_usuariosact_admin_Admin('Admin','123456798','Hola');
+
 
 -- drop procedure act_admin_Admin;
 /*Eliminar Administrador*/
@@ -466,7 +425,7 @@ insert into Jornada (fecha, lugar, duracion,descripcion, foto) values(fec,lug,du
 
 -- drop procedure FunInsertar_Eventos;
 
-call FunInsertar_Eventos('2017-04-16','Parque','2:30 pm','vacunacion','evento.jpg');
+
 
 
 /*Modificar Eventos*/
