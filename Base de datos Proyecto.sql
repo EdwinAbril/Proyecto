@@ -110,6 +110,7 @@ lugar varchar(45),
 duracion varchar(20));
 
 alter table jornada add descripcion varchar(255);
+alter table jornada add foto varchar(255);
 
 -- drop table jornada;
 
@@ -460,13 +461,17 @@ Delete from Denuncia where codigo_denuncia=cod;
 /*EVENTOS (JORNADAS)*/
 
 /*Insertar Eventos*/
-Create procedure FunInsertar_Eventos(fec date, lug varchar(45), dur varchar(20),des varchar(255))
-insert into Jornada (fecha, lugar, duracion,descripcion) values(fec,lug,dur,des) ;
+Create procedure FunInsertar_Eventos(fec date, lug varchar(45), dur varchar(20),des varchar(255),fot varchar(255))
+insert into Jornada (fecha, lugar, duracion,descripcion, foto) values(fec,lug,dur,des,fot);
+
+-- drop procedure FunInsertar_Eventos;
+
+call FunInsertar_Eventos('2017-04-16','Parque','2:30 pm','vacunacion','evento.jpg');
 
 
 /*Modificar Eventos*/
-Create procedure FunModificar_Eventos( cod int(30), fec date, lug varchar(45), dur varchar(20), des varchar(255))
-Update jornada set fecha=fec, lugar=lug, duracion=dur, descripcion=des where codigo_jornada=cod; 
+Create procedure FunModificar_Eventos( cod int(30), fec date, lug varchar(45), dur varchar(20), des varchar(255),fot varchar(255))
+Update jornada set fecha=fec, lugar=lug, duracion=dur, descripcion=des, foto=fot where codigo_jornada=cod; 
 -- drop procedure FunModificar_Eventos;
 
 /*Eliminar Eventos*/
