@@ -22,7 +22,7 @@ alter table login_usuarios add foto varchar(255);
 insert into login_usuarios(nombre_usuario,clave,rol_login,foto)
 values('Juan','123',4,'usuario.jpeg'),
 ('Veterinaria-1','veterinaria',3,'usuario.jpeg'),
-('Funcionario-1','funcionario',2,'usuario,jpeg'),
+('12348765','funcionario',2,'usuario.jpeg'),
 ('Alf','admin',1,'usuario.jpeg');
 
 insert into login_usuarios(nombre_usuario,clave,rol_login,foto)
@@ -206,7 +206,7 @@ constraint ced foreign key (cedula_funcionario) references login_usuarios(nombre
 
 insert into funcionario(cedula_funcionario,telefono_funcionario,nombre_funcionario,correo_funcionario,cargo,dependencia)
 values
-('Funcionario-1','3216440371','Oscar Perez','oscar@gmail.com','Funcionario','Alcaldia Mosquera');
+('12348765','3216440371','Oscar Perez','oscar@gmail.com','Funcionario','Alcaldia Mosquera');
 
 
 
