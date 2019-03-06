@@ -92,10 +92,10 @@ alter table jornada add foto varchar(255);
 
 -- drop table jornada;
 
-insert into jornada(fecha,lugar,duracion,foto)
+insert into jornada(fecha,lugar,duracion,descripcion,foto)
 values
-('2019/03/02','Parque Central','2 horas','evento1.jpeg'),
-('2019/03/01','Parque de Mosquera','3 horas','evento2.jpeg');
+('2019/03/02','Parque Central','2 horas','Jornada de Vacunacion','evento1.jpeg'),
+('2019/03/01','Parque de Mosquera','3 horas','Jornada de Baño','evento2.jpeg');
 
 create table preguntas
 (respuesta1 int,
