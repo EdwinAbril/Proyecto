@@ -137,7 +137,6 @@ create table postulacion
 telefono_contacto varchar (20),
 direccion_contacto varchar (20),
 telefono_fijo varchar (20),
-certificado_laboral varchar(255),
 cedula_pdf varchar(255),
 estrato int(3),
 residentes int(3),
@@ -151,6 +150,17 @@ alter table postulacion add codigo_animal int(30);
 alter table postulacion add constraint omaiba foreign key (codigo_animal) references animal (codigo_animal) on delete cascade on update cascade;
 
 -- drop table postulacion;
+create table citacion(
+cedula varchar(50) primary key,
+mensaje varchar(255),
+fecha datetime,
+validacion varchar(255),
+constraint ced_vis foreign key (cedula) references ciudadano(cedula) on delete cascade on update cascade);
+
+create table validacion(
+cedula varchar(50) primary key,
+mensaje varchar(255),
+constraint ced_con foreign key (cedula) references ciudadano(cedula) on delete cascade on update cascade);
 
 create table seguimiento
 (codigo_seguimiento int (30) auto_increment primary key,
@@ -158,7 +168,7 @@ postulacion int (30),
 telefono_contacto varchar (20),
 direccion_contacto varchar (20),
 telefono_fijo varchar (20),
-certificado_laboral varchar(255),
+fecha_visita date,
 cedula_pdf varchar(255),
 estrato int(3),
 residentes int(3),
@@ -334,9 +344,8 @@ delete from login_usuarios where nombre_usuario=us;
 
 /* ADOPCIONES */
 
-Create procedure VetInsertar_Adopcion(ani int(30),cedu varchar(50),mens varchar(100))
-insert into Adopcion (animal,cedula,mensaje) values(ani,cedu,mens);
-
+Create procedure VetInsertar_Adopcion(ico varchar(255),ani int(30),cedu varchar(50),mens varchar(100),enc varchar(50))
+insert into Adopcion (icono,animal,cedula,mensaje,funcionario_encargado) values(ico,ani,cedu,mens,enc);
 
 
 Create procedure VetModificar_Adopcion( cod int(30),mens varchar(100))
@@ -441,8 +450,10 @@ Delete from jornada where codigo_jornada=codi;
 /*FUNCIONARIO*/
 
 /*Insertar Funcionario*/
-create procedure Insertar_Funcionario(cedula varchar(30),telefono varchar(30),nombre varchar(50),correo varchar(100),rol int(30))
-insert into funcionario  (cedula_funcionario,telefono_funcionario,nombre_funcionario,correo_funcionario,rol3)values(cedula,telefono,nombre,correo,rol);
+create procedure Insertar_Funcionario(cedula varchar(30),telefono varchar(30),nombre varchar(50),correo varchar(100),car varchar(50),depen varchar(50))
+insert into funcionario  (cedula_funcionario,telefono_funcionario,nombre_funcionario,correo_funcionario,cargo,dependencia)values(cedula,telefono,nombre,correo,car,depen);
+-- drop procedure Insertar_Funcionario;
+
 /*Modificar Funcionario*/
 Create procedure Modificar_Funcionario( ced varchar(30), tel varchar(30), nom varchar(50), cor varchar(100),dep varchar(50))
 Update Funcionario set telefono_funcionario=tel, nombre_funcionario=nom, correo_funcionario=cor, dependencia=dep where cedula_funcionario=ced; 
@@ -507,8 +518,9 @@ Delete from Seguimiento where codigo_Seguimiento=cod;
 /*VETERINARIA*/
 
 /*Insertar Veterinaria*/
-create procedure inser_veter_Admin(nit varchar(30),tel varchar(30),nombre varchar(50),dir varchar(50),clave varchar(50),rol int(30))
-insert into veterinaria (nit_veterinaria,telefono_veterinaria,nombre_veterinaria,direccion_veterinaria,clave,rol2) values(nit,tel,nombre,dir,clave,rol);
+create procedure inser_veter_Admin(nit varchar(30),tel varchar(30),nombre varchar(50),dir varchar(50))
+insert into veterinaria (nit_veterinaria,telefono_veterinaria,nombre_veterinaria,direccion_veterinaria) values(nit,tel,nombre,dir);
+-- drop procedure inser_veter_Admin;
 
 /*Modificar Veterinaria*/
 create procedure act_veter_Admin(nit varchar(30),tel varchar(30),nombre varchar(50),dir varchar(50))
