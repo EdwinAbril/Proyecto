@@ -153,7 +153,8 @@ alter table postulacion add constraint omaiba foreign key (codigo_animal) refere
 create table citacion(
 cedula varchar(50) primary key,
 mensaje varchar(255),
-fecha datetime,
+fecha date,
+hora time,
 validacion varchar(255),
 constraint ced_vis foreign key (cedula) references ciudadano(cedula) on delete cascade on update cascade);
 
@@ -176,7 +177,9 @@ tipo_vivienta varchar(100),
 resultado_puntos int(4),
 recibo_pub varchar(255),
 cedu varchar (50),
-animal int(30)
+animal int(30),
+fecha_citacion date,
+mensaje_respuesta varchar(255)
 );
 alter table seguimiento add constraint naur foreign key (animal) references animal (codigo_animal) on delete cascade on update cascade;
 alter table seguimiento add constraint pos foreign key(postulacion) references postulacion (codigo_postulacion) on delete cascade on update cascade;
@@ -501,8 +504,8 @@ create procedure usuario_postulacion_elim(codpost varchar(20))
 delete from postulacion where codigo_postulacion=codpost;
 
 /*CITACION*/
-create procedure Insertar_Citacion(cedu varchar(50),mens varchar(255), fech datetime)
-insert into citacion(cedula,mensaje,fecha) values (cedu,mens,fech);
+create procedure Insertar_Citacion(cedu varchar(50),mens varchar(255), fech datetime, hor time)
+insert into citacion(cedula,mensaje,fecha,hora) values (cedu,mens,fech,hor);
 
 
 /*SEGUIMIENTO*/
