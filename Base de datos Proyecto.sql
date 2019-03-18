@@ -156,6 +156,8 @@ mensaje varchar(255),
 fecha date,
 hora time,
 validacion varchar(255),
+postulacion int(30),
+constraint postula foreign key (postulacion) references postulacion(codigo_postulacion) on delete cascade on update cascade,
 constraint ced_vis foreign key (cedula) references ciudadano(cedula) on delete cascade on update cascade);
 
 create table validacion(
@@ -504,16 +506,30 @@ create procedure usuario_postulacion_elim(codpost varchar(20))
 delete from postulacion where codigo_postulacion=codpost;
 
 /*CITACION*/
-create procedure Insertar_Citacion(cedu varchar(50),mens varchar(255), fech datetime, hor time)
-insert into citacion(cedula,mensaje,fecha,hora) values (cedu,mens,fech,hor);
+create procedure Insertar_Citacion(cedu varchar(50),mens varchar(255), fech datetime, hor time,pos int(30))
+insert into citacion(cedula,mensaje,fecha,hora,postulacion) values (cedu,mens,fech,hor,pos);
 
+create procedure Respuesta_Citacion(pos int(30),men varchar(255))
+update seguimiento set mensaje_respuesta=men where postulacion=pos;
+
+Create procedure Eliminar_Fecha(pos int(30))
+update seguimiento set fecha_citacion=null where postulacion=pos;
+
+Create procedure Actualizar_Fecha(pos int(30),fec date,men varchar(255))
+update seguimiento set fecha_citacion=fec, mensaje_respuesta=men where postulacion=pos;
+
+Create procedure Actualizar_Fecha_Citacion(pos int(30), men varchar(255), fec date, hor time)
+update citacion set mensaje=men, fecha=fec, hora=hor where postulacion=pos;
+
+-- drop procedure Actualizar_Fecha_Citacion; 
 
 /*SEGUIMIENTO*/
 
 /*Insertar Seguimiento*/
-create procedure FunInsertar_Seguimiento(postulacion int(30),tel_con varchar(20), dir_con varchar(20), tel_fij varchar(20),ced_pdf varchar(255),est int(3),res int(3),ub varchar(100),tip varchar(100),resu int(4),reci varchar(255), cedu varchar(20),con_ani int(30))
-insert into seguimiento (postulacion,telefono_contacto,direccion_contacto,telefono_fijo,cedula_pdf,estrato,residentes,ubicacion,tipo_vivienta,resultado_puntos,recibo_pub,cedu,animal) values (postulacion,tel_con, dir_con, tel_fij, ced_pdf,est,res,ub,tip,resu,reci,cedu,con_ani);
+create procedure FunInsertar_Seguimiento(postulacion int(30),tel_con varchar(20), dir_con varchar(20), tel_fij varchar(20),ced_pdf varchar(255),est int(3),res int(3),ub varchar(100),tip varchar(100),resu int(4),reci varchar(255), cedu varchar(20),con_ani int(30),fech_c date,mere varchar(255))
+insert into seguimiento (postulacion,telefono_contacto,direccion_contacto,telefono_fijo,cedula_pdf,estrato,residentes,ubicacion,tipo_vivienta,resultado_puntos,recibo_pub,cedu,animal,fecha_citacion,mensaje_respuesta) values (postulacion,tel_con, dir_con, tel_fij, ced_pdf,est,res,ub,tip,resu,reci,cedu,con_ani,fech_c,mere);
 -- drop procedure FunInsertar_Seguimiento;
+
 
 /*Modificar Seguimiento*/
 Create procedure FunModificar_Seguimiento( cod int(30), cdp int(30))
