@@ -23,7 +23,7 @@ insert into login_usuarios(nombre_usuario,clave,rol_login,foto)
 values('Juan','123',4,'usuario.jpeg'),
 ('Veterinaria-1','veterinaria',3,'usuario.jpeg'),
 ('12348765','funcionario',2,'usuario.jpeg'),
-('Alf','admin',1,'usuario.jpeg');
+('James','admin',1,'usuario.jpeg');
 
 insert into login_usuarios(nombre_usuario,clave,rol_login,foto)
 values ('David','admin',1,'usuario.jpeg');
@@ -474,10 +474,11 @@ create procedure usuario_mascota_inser(nom_mas varchar(30), tipo varchar(50), ed
 insert into mascota (nombre_mascota,tipo_mascota,edad_mascota,raza_mascota,foto,tamano,genero,color,ced) values (nom_mas,tipo,edad,raza,fot,tam,gen,col,cedu) ;
 
 /*Insertar mascota adoptada*/
-create procedure usuario_mascota_adop(nom_mas varchar(30), tipo varchar(50), edad varchar(5), raza varchar(30),tam varchar(30),gen varchar(30),col varchar(30) ,cedu varchar(20))
-insert into mascota (nombre_mascota,tipo_mascota,edad_mascota,raza_mascota,tamano,genero,color,ced) values (nom_mas,tipo,edad,raza,tam,gen,col,cedu) ;
+create procedure usuario_mascota_adop(nom_mas varchar(30), tipo varchar(50), edad varchar(5), raza varchar(30),fot varchar(255),tam varchar(30),gen varchar(30),col varchar(30) ,cedu varchar(20))
+insert into mascota (nombre_mascota,tipo_mascota,edad_mascota,raza_mascota,foto,tamano,genero,color,ced) values (nom_mas,tipo,edad,raza,fot,tam,gen,col,cedu) ;
 
--- drop procedure usuario_mascota_inser;
+-- drop procedure usuario_mascota_adop;
+
 /*Modificar Mascota*/
 create procedure usuario_mascota_actu
 (cod_mas int(30), nom_mas varchar(30), tipo varchar(50), edad varchar(5), raza varchar(30),fot varchar(255), tam varchar(30),gen varchar(30),col varchar(30) ,cedu varchar(20))
